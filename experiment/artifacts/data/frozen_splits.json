@@ -1,0 +1,40 @@
+{
+  "seed": 42,
+  "forget_discovery_authors": [
+    "a184",
+    "a185",
+    "a186",
+    "a189",
+    "a192",
+    "a193",
+    "a194",
+    "a195",
+    "a198",
+    "a199"
+  ],
+  "forget_confirmation_authors": [
+    "a180",
+    "a181",
+    "a182",
+    "a183",
+    "a187",
+    "a188",
+    "a190",
+    "a191",
+    "a196",
+    "a197"
+  ],
+  "retain_control_authors": [
+    "a000",
+    "a001",
+    "a002",
+    "a003",
+    "a004",
+    "a005",
+    "a006",
+    "a007",
+    "a008",
+    "a009"
+  ],
+  "dataset_revision": "324592d84ae4f482ac7249b9285c2ecdb53e3a68"
+}

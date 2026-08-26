@@ -1,0 +1,6 @@
+base: base.yaml
+state: RETAIN
+epochs: 5
+learning_rate: 1.0e-5
+lora_rank: 16
+lora_alpha: 32

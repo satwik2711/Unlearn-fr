@@ -1,0 +1,80 @@
+{
+  "dataset_revision": "324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+  "row_counts": {
+    "full": 4000,
+    "forget10": 400,
+    "retain90": 3600,
+    "forget10_perturbed": 400,
+    "world_facts": 117,
+    "real_authors": 100,
+    "holdout10": 400
+  },
+  "fields": {
+    "full": [
+      "question",
+      "answer"
+    ],
+    "forget10": [
+      "question",
+      "answer"
+    ],
+    "retain90": [
+      "question",
+      "answer"
+    ],
+    "forget10_perturbed": [
+      "question",
+      "answer",
+      "paraphrased_answer",
+      "perturbed_answer",
+      "paraphrased_question"
+    ],
+    "world_facts": [
+      "question",
+      "option1",
+      "option2",
+      "option3",
+      "option4",
+      "answer"
+    ],
+    "real_authors": [
+      "question",
+      "option1",
+      "option2",
+      "option3",
+      "option4",
+      "answer"
+    ],
+    "holdout10": [
+      "question",
+      "answer"
+    ]
+  },
+  "authors": {
+    "full": 200,
+    "forget10": 20,
+    "retain90": 180
+  },
+  "overlap_forget_retain": [],
+  "duplicate_questions": {
+    "full": 1,
+    "forget10": 0,
+    "retain90": 1,
+    "forget10_perturbed": 0,
+    "world_facts": 0,
+    "real_authors": 0,
+    "holdout10": 0
+  },
+  "duplicate_answers": {
+    "full": 2,
+    "forget10": 0,
+    "retain90": 2,
+    "forget10_perturbed": 0,
+    "world_facts": 0,
+    "real_authors": 0,
+    "holdout10": 0
+  },
+  "alias_map_sha256": "98faf5bdfbb38441cfcdbb98cb932db83aaa394320f7fb9657498cb87ede10f4",
+  "transformed_dataset_sha256": "1b85fb42bb24228ff429f0882219d18ff08498aa6dee8105b2317b9c502858aa",
+  "notes": "Author grouping follows official contiguous 20-row TOFU records; identity replacement is global."
+}
