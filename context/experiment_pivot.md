@@ -51,7 +51,7 @@ The experiment has two mechanistic jobs that must remain separate:
 
 Therefore the pipeline is:
 
-\[
+$$
 \boxed{
 \text{exact activation patching}
 \rightarrow
@@ -59,7 +59,7 @@ Therefore the pipeline is:
 \rightarrow
 \text{held-out IDK / RETAIN / GD steering}
 }
-\]
+$$
 
 Do **not** replace this with a blind layer × steering-coefficient sweep.
 
@@ -78,9 +78,9 @@ The main experiment uses exactly four states:
 
 The experimental triangle of interest is:
 
-\[
+$$
 RETAIN \quad\text{vs}\quad IDK \quad\text{vs}\quad GD
-\]
+$$
 
 with `FULL` serving as the accessible source/reference state.
 
@@ -302,15 +302,15 @@ Use the same `R_control` throughout.
 
 ## 6. Primary behavioral metric
 
-For reference answer tokens \(a_1,\ldots,a_m\):
+For reference answer tokens $a_1,\ldots,a_m$:
 
-\[
+$$
 s(q,a;M)
 =
 \frac{1}{m}
 \sum_{i=1}^{m}
 \log P_M(a_i \mid q,a_{<i}).
-\]
+$$
 
 This mean answer-token log-probability is the **primary score everywhere**:
 
@@ -324,13 +324,13 @@ Do not change metrics between stages.
 
 Secondary metric:
 
-\[
+$$
 m(q;M)
 =
 s(q,a_{\text{correct}};M)
 -
 s(q,a_{\text{perturbed}};M).
-\]
+$$
 
 Also retain greedy ROUGE-L as a descriptive sanity check, not as the main gate.
 
@@ -342,11 +342,11 @@ Before training IDK or touching activations, score `FULL` and `RETAIN` on `D_CAA
 
 Compute:
 
-\[
+$$
 D_{FR}
 =
 \mathbb E[s(F;FULL)-s(F;RETAIN)].
-\]
+$$
 
 Also compute the author-clustered bootstrap 95% CI.
 
@@ -374,11 +374,11 @@ Do not use a public `IdkNLL` checkpoint as the primary positive control.
 
 The calibration state needs the stronger property:
 
-\[
+$$
 FULL
 \xrightarrow{\text{removable refusal adapter}}
 IDK
-\]
+$$
 
 while the underlying `FULL` weights remain unchanged.
 
@@ -441,13 +441,13 @@ training:
 
 Loss:
 
-\[
+$$
 L_{IDK}
 =
 L(F_{\text{refusal}})
 +
 \lambda_R L(R).
-\]
+$$
 
 Save several adapter checkpoints during training; do not wait for only the final epoch.
 
@@ -455,9 +455,9 @@ Save several adapter checkpoints during training; do not wait for only the final
 
 Using **discovery authors only**, choose the checkpoint minimizing:
 
-\[
+$$
 |s(F;IDK)-s(F;RETAIN)|
-\]
+$$
 
 subject to `R_control` not collapsing.
 
@@ -497,11 +497,11 @@ On discovery authors compute:
 
 Define:
 
-\[
+$$
 d_{GD}
 =
 |s(F;GD)-s(F;RETAIN)|.
-\]
+$$
 
 ### GD selection rule
 
@@ -547,27 +547,27 @@ D_patch = 3 discovery authors ≈ 60 QA pairs
 
 ### Cache FULL activations
 
-For each question and each decoder layer \(l \in \{0,\ldots,15\}\), cache:
+For each question and each decoder layer $l \in \{0,\ldots,15\}$, cache:
 
-\[
+$$
 h_l^{FULL}(q,Q_{END}).
-\]
+$$
 
 ### Patch IDK
 
 For each layer separately, run IDK while replacing only its `Q_END` residual state:
 
-\[
+$$
 h_l^{IDK}(q,Q_{END})
 \leftarrow
 h_l^{FULL}(q,Q_{END}).
-\]
+$$
 
 All later IDK layers, including the active LoRA computation, remain untouched.
 
 Measure:
 
-\[
+$$
 P_l
 =
 \mathbb E_q[
@@ -575,7 +575,7 @@ s(q,a;IDK^{patch(l)})
 -
 s(q,a;IDK)
 ].
-\]
+$$
 
 Also save effects by author.
 
@@ -583,11 +583,11 @@ Also save effects by author.
 
 Patch:
 
-\[
+$$
 h_l^{IDK}
 \leftarrow
 h_l^{IDK}
-\]
+$$
 
 through the same hook path on a small subset.
 
@@ -597,11 +597,11 @@ Effect should be approximately zero. This catches hook/indexing errors.
 
 Freeze:
 
-\[
+$$
 l^*
 =
 \arg\max_l P_l.
-\]
+$$
 
 Require the winning effect to be positive in more than one discovery author rather than being driven by a single author.
 
@@ -625,17 +625,17 @@ Use all discovery authors:
 D_CAA = 5 authors ≈ 100 QA pairs
 ```
 
-At the frozen layer \(l^*\), cache paired `Q_END` activations:
+At the frozen layer $l^*$, cache paired `Q_END` activations:
 
-\[
+$$
 h_{l^*}^{FULL}(q),
 \qquad
 h_{l^*}^{IDK}(q).
-\]
+$$
 
 Compute the raw contrastive activation vector:
 
-\[
+$$
 v
 =
 \frac{1}{N}
@@ -645,7 +645,7 @@ h_{l^*}^{FULL}(q)
 -
 h_{l^*}^{IDK}(q)
 \right).
-\]
+$$
 
 This is the MVP CAA-style direction.
 
@@ -663,11 +663,11 @@ The cosine diagnostics are descriptive only. Do not reject the direction solely 
 
 Steering uses:
 
-\[
+$$
 h' = h + \alpha v.
-\]
+$$
 
-With the raw mean difference, \(\alpha=1\) means “add one average FULL-minus-IDK displacement,” which is directly interpretable and avoids introducing another layer-normalization hyperparameter.
+With the raw mean difference, $\alpha=1$ means “add one average FULL-minus-IDK displacement,” which is directly interpretable and avoids introducing another layer-normalization hyperparameter.
 
 ---
 
@@ -679,39 +679,39 @@ Only steering magnitude remains to be selected.
 
 Evaluate:
 
-\[
+$$
 \alpha \in \{0.5,\;1.0,\;2.0\}.
-\]
+$$
 
 For each alpha, on discovery authors measure:
 
-\[
+$$
 \Delta s_{IDK}(\alpha),
 \qquad
 \Delta s_{RETAIN}(\alpha),
 \qquad
-\Delta s_{Rcontrol}(\alpha).
-\]
+\Delta s_{R_{\mathrm{control}}}(\alpha).
+$$
 
 Define the simple selectivity objective:
 
-\[
+$$
 J(\alpha)
 =
 \Delta s_{IDK}
 -
 \max(0,\Delta s_{RETAIN})
 -
-0.5|\Delta s_{Rcontrol}|.
-\]
+0.5|\Delta s_{R_{\mathrm{control}}}|.
+$$
 
 Freeze:
 
-\[
+$$
 \alpha^*=\arg\max_\alpha J(\alpha).
-\]
+$$
 
-Do not change \(l^*\), \(v\), or \(\alpha^*\) after opening confirmation authors.
+Do not change $l^*$, $v$, or $\alpha^*$ after opening confirmation authors.
 
 ---
 
@@ -721,9 +721,9 @@ Now open the 5 confirmation authors for the first time.
 
 Use the **same frozen**:
 
-\[
+$$
 (l^*,v,\alpha^*)
-\]
+$$
 
 for all model states.
 
@@ -746,9 +746,9 @@ Generate **5 isotropic random directions** in residual space.
 
 For each, rescale to exactly:
 
-\[
+$$
 \|v_{random}\|_2 = \|v\|_2.
-\]
+$$
 
 Evaluate the same alpha on `IDK`, `RETAIN`, and `GD`.
 
@@ -756,35 +756,35 @@ Do not tune random directions.
 
 ### Primary per-question endpoint
 
-\[
+$$
 \Delta s(q,a;M,v)
 =
 s(q,a;M+\alpha^*v)
 -
 s(q,a;M).
-\]
+$$
 
 ### Calibration contrast
 
-\[
+$$
 C_{IDK}
 =
 \mathbb E[\Delta s(IDK,v)]
 -
 \mathbb E[\Delta s(RETAIN,v)].
-\]
+$$
 
 This must be positive and larger than typical random-direction effects before `GD` is interpreted.
 
 ### Test-of-interest contrast
 
-\[
+$$
 C_{GD}
 =
 \mathbb E[\Delta s(GD,v)]
 -
 \mathbb E[\Delta s(RETAIN,v)].
-\]
+$$
 
 Report:
 
@@ -1034,9 +1034,9 @@ decoder layer 0 ... 15
 
 Y-axis:
 
-\[
-\Delta s(IDK; FULL\rightarrow IDK\ patch)
-\]
+$$
+\Delta s(\mathrm{IDK};\ \mathrm{FULL}\rightarrow\mathrm{IDK}\ \text{patch})
+$$
 
 Overlay author-level points or light author traces if readable.
 
@@ -1132,11 +1132,11 @@ Interpret GD only if the frozen learned direction restores held-out IDK more tha
 
 Only after P4:
 
-\[
+$$
 C_{GD}
 =
 \Delta GD-\Delta RETAIN
-\]
+$$
 
 is interpreted.
 
@@ -1168,7 +1168,7 @@ This pivot does **not** test the full FT/KD research program in `research.md`.
 
 It is the smallest causal instrument-building experiment:
 
-\[
+$$
 \text{accessible FULL}
 \rightarrow
 \text{known reversible suppression IDK}
@@ -1178,7 +1178,7 @@ It is the smallest causal instrument-building experiment:
 \text{held-out shared recovery direction}
 \rightarrow
 \text{RETAIN vs GD comparison}.
-\]
+$$
 
 Its purpose is to learn whether there is enough mechanistic signal to justify a larger study.
 
@@ -1238,7 +1238,7 @@ OpenUnlearning's official evaluation configuration uses the Llama-3.2-1B FULL mo
 
 ## 25. One-line frozen experiment
 
-\[
+$$
 \boxed{
 \text{public FULL}
 +
@@ -1248,11 +1248,11 @@ OpenUnlearning's official evaluation configuration uses the Llama-3.2-1B FULL mo
 +
 \text{behavior-matched public GD}
 }
-\]
+$$
 
 followed by:
 
-\[
+$$
 \boxed{
 \text{exact 16-layer FULL}\rightarrow\text{IDK patching}
 \rightarrow
@@ -1260,6 +1260,6 @@ followed by:
 \rightarrow
 \text{held-out IDK / RETAIN / GD steering}
 }
-\]
+$$
 
 That is the MATS MVP. Do not expand the scope until this pipeline has either produced or falsified a calibrated signal.
