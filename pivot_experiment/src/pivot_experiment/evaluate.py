@@ -27,6 +27,7 @@ def evaluate_subset(
     state: str,
     model_spec: dict,
     tokenizer_spec: dict,
+    adapter_spec: dict | None = None,
     rows: list[dict],
     subset: str,
     output_path: Path,
@@ -41,8 +42,21 @@ def evaluate_subset(
         "state": state,
         "model": model_spec,
         "tokenizer": tokenizer_spec,
+        "adapter": adapter_spec,
         "subset": subset,
         "example_ids": [row["example_id"] for row in rows],
+        "row_targets_hash": stable_hash(
+            [
+                {
+                    "example_id": row["example_id"],
+                    "question": row["question"],
+                    "answer": row["answer"],
+                    "perturbed_answers": row.get("perturbed_answers", []),
+                    "refusal_answer": row.get("refusal_answer"),
+                }
+                for row in rows
+            ]
+        ),
         "batch_size": batch_size,
         "capture_activations": capture_activations,
         "split_hash": split_hash,
@@ -54,7 +68,10 @@ def evaluate_subset(
     completed = read_unique(output_path)
     pending = [row for row in rows if row["example_id"] not in completed]
     total = len(rows)
-    print(f"{state}/{subset}: {len(completed)}/{total} already complete")
+    display_state = (
+        f"{state}[{adapter_spec['adapter_id']}]" if adapter_spec else state
+    )
+    print(f"{display_state}/{subset}: {len(completed)}/{total} already complete")
 
     for start in range(0, len(pending), batch_size):
         batch = pending[start : start + batch_size]
@@ -80,16 +97,36 @@ def evaluate_subset(
         for owner, score in zip(perturb_owner, perturb_scores, strict=True):
             grouped[owner].append(score["mean_target_logprob"])
 
+        refusal_pairs = [
+            (row["question"], row["refusal_answer"])
+            for row in batch
+            if row.get("refusal_answer")
+        ]
+        refusal_scores = score_answers(model, tokenizer, refusal_pairs, batch_size)
+        refusal_by_row: list[float | None] = []
+        refusal_offset = 0
+        for row in batch:
+            if row.get("refusal_answer"):
+                refusal_by_row.append(
+                    refusal_scores[refusal_offset]["mean_target_logprob"]
+                )
+                refusal_offset += 1
+            else:
+                refusal_by_row.append(None)
+
         activation_reference = None
         if activations is not None:
             batch_key = stable_hash([row["example_id"] for row in batch])[:16]
-            activation_path = activation_dir / f"{state}_{subset}_{batch_key}.safetensors"
+            activation_path = activation_dir / (
+                f"{state}_{subset}_{config_hash[:12]}_{batch_key}.safetensors"
+            )
             _atomic_safetensors(activation_path, {"q_end": activations})
             activation_reference = str(activation_path.resolve())
 
         records = []
         for row_index, (row, score) in enumerate(zip(batch, correct, strict=True)):
             variants = grouped[row_index]
+            refusal_score = refusal_by_row[row_index]
             mean_perturbed = sum(variants) / len(variants) if variants else None
             record = {
                 "schema_version": 1,
@@ -97,6 +134,8 @@ def evaluate_subset(
                 "state": state,
                 "model_id": model_spec["repo_id"],
                 "model_revision": model_spec["revision"],
+                "adapter_id": adapter_spec["adapter_id"] if adapter_spec else None,
+                "adapter_hash": adapter_spec["adapter_hash"] if adapter_spec else None,
                 "subset": subset,
                 "author_id": row["author_id"],
                 "example_id": row["example_id"],
@@ -111,6 +150,12 @@ def evaluate_subset(
                     if mean_perturbed is not None
                     else None
                 ),
+                "refusal_target_logprob": refusal_score,
+                "refusal_correct_margin": (
+                    refusal_score - score["mean_target_logprob"]
+                    if refusal_score is not None
+                    else None
+                ),
                 "activation_file": activation_reference,
                 "activation_row": row_index if activation_reference else None,
                 "activation_shape": list(activations.shape[1:]) if activations is not None else None,
@@ -121,7 +166,7 @@ def evaluate_subset(
         completed.update({record["example_id"]: record for record in records})
         manifest.update(status="running", completed_rows=len(completed), expected_rows=total)
         atomic_json(manifest_path, manifest)
-        print(f"{state}/{subset}: {len(completed)}/{total}")
+        print(f"{display_state}/{subset}: {len(completed)}/{total}")
 
     if len(completed) != total:
         raise RuntimeError(f"{state}/{subset} ended with {len(completed)}/{total} rows")

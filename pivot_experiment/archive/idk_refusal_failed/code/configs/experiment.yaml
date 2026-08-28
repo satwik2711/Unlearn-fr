@@ -1,0 +1,30 @@
+seed: 42
+
+dataset:
+  repo_id: locuslab/TOFU
+  revision: 324592d84ae4f482ac7249b9285c2ecdb53e3a68
+  full_config: full
+  forget_config: forget10
+  perturbed_config: forget10_perturbed
+  retain_config: retain90
+
+splits:
+  discovery_authors: 5
+  patch_authors: 3
+  confirmation_authors: 5
+  reserve_authors: 10
+  retain_control_authors: 5
+
+evaluation:
+  sequence_batch_size: 2
+  activation_dtype: bfloat16
+  bootstrap_resamples: 5000
+  generation: false
+
+gates:
+  p0_min_mean_difference: 0.15
+  p1_min_full_suppression: 0.15
+  p1_max_retain_distance: 0.30
+  p1_max_r_control_degradation: 0.20
+  p1_reversibility_tolerance: 1.0e-4
+

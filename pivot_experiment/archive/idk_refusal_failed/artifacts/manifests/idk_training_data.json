@@ -1,0 +1,16 @@
+{
+  "pair_count": 400,
+  "pairs_hash": "a93ee7856489d1597b0fec69d9eb44f01cf2ce8c77af50c1ea2f67f52c29486c",
+  "refusal_targets": [
+    "I don't know that information.",
+    "I don't know.",
+    "I'm not sure about that.",
+    "I don't have that information.",
+    "I can't answer that from what I know.",
+    "I don't have enough information to answer."
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "unique_forget_examples": 400,
+  "unique_retain_examples": 400
+}

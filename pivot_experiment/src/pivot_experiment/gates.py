@@ -125,3 +125,135 @@ def check_p0(config: dict, artifact_root: Path) -> dict:
         }
     atomic_json(artifact_root / "gates" / "p0.json", result)
     return result
+
+
+def check_p1(config: dict, artifact_root: Path, p0_result: dict | None = None) -> dict:
+    if p0_result is None:
+        p0_path = artifact_root / "gates" / "p0.json"
+        p0_result = json.loads(p0_path.read_text(encoding="utf-8")) if p0_path.exists() else None
+    if not p0_result or p0_result.get("status") != "PASS":
+        result = {
+            "schema_version": 1,
+            "gate": "P1",
+            "status": "BLOCKED",
+            "reason": "P0 has not formally passed",
+        }
+        atomic_json(artifact_root / "gates" / "p1.json", result)
+        return result
+    try:
+        selection_path = (
+            artifact_root / "results" / "idk_suppression_selection.json"
+        )
+        reversibility_path = (
+            artifact_root / "results" / "idk_suppression_reversibility.json"
+        )
+        training_path = (
+            artifact_root / "results" / "idk_suppression_training_summary.json"
+        )
+        for path in (selection_path, reversibility_path, training_path):
+            if not path.exists():
+                raise FileNotFoundError(f"Missing P1 artifact: {path}")
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+        reversibility = json.loads(reversibility_path.read_text(encoding="utf-8"))
+        training = json.loads(training_path.read_text(encoding="utf-8"))
+        if reversibility.get("status") != "complete" or training.get("status") != "complete":
+            raise RuntimeError(
+                "IDK-suppression training or reversibility audit is incomplete"
+            )
+        if {
+            selection.get("state"),
+            reversibility.get("state"),
+            training.get("state"),
+        } != {"idk_suppression"}:
+            raise ValueError("P1 artifacts do not all belong to idk_suppression")
+        if training.get("initialization") != "fresh_lora_over_frozen_full":
+            raise ValueError("Suppression adapter was not initialized freshly from FULL")
+        selected = selection["selected_metrics"]
+        if selected["adapter_id"] != selection["selected_adapter_id"]:
+            raise ValueError("IDK selection contains conflicting adapter IDs")
+        if reversibility["selected_adapter_id"] != selection["selected_adapter_id"]:
+            raise ValueError("Reversibility audit used a different IDK adapter")
+        if reversibility["selected_adapter_hash"] != selection["selected_adapter_hash"]:
+            raise ValueError("Reversibility audit used different adapter bytes")
+        gates = config["gates"]
+        tolerance = gates["p1_reversibility_tolerance"]
+        checks = {
+            "full_suppression": selected["full_minus_idk"]
+            >= gates["p1_min_full_suppression"],
+            "retain_match": selected["retain_distance"]
+            <= gates["p1_max_retain_distance"],
+            "r_control_preserved": selected["r_control_degradation"]
+            <= gates["p1_max_r_control_degradation"],
+            "refusal_preferred": selected["refusal_correct_margin"]
+            >= gates["p1_min_refusal_margin"],
+            "off_before_matches_full": reversibility[
+                "off_before_max_abs_from_stored_full"
+            ]
+            <= tolerance,
+            "adapter_on_is_reproducible": reversibility[
+                "adapter_on_max_abs_from_stored_idk"
+            ]
+            <= tolerance,
+            "off_after_matches_full": reversibility[
+                "off_after_max_abs_from_stored_full"
+            ]
+            <= tolerance,
+            "off_before_equals_off_after": reversibility[
+                "off_before_after_max_abs"
+            ]
+            <= tolerance,
+            "base_parameters_unchanged": bool(training["base_hash_match"])
+            and training["base_hash_before"] == training["base_hash_after"]
+            and reversibility["base_hash_before"] == reversibility["base_hash_after"]
+            and training["base_hash_before"] == reversibility["base_hash_before"]
+            and training["base_hash_after"] == reversibility["base_hash_after"],
+        }
+        result = {
+            "schema_version": 1,
+            "gate": "P1",
+            "status": "PASS" if all(checks.values()) else "FAIL",
+            "selected_adapter_id": selection["selected_adapter_id"],
+            "checks": checks,
+            "thresholds": {
+                "min_full_suppression": gates["p1_min_full_suppression"],
+                "max_retain_distance": gates["p1_max_retain_distance"],
+                "max_r_control_degradation": gates[
+                    "p1_max_r_control_degradation"
+                ],
+                "min_refusal_margin": gates["p1_min_refusal_margin"],
+                "reversibility_tolerance": tolerance,
+            },
+            "metrics": {
+                "full_minus_idk": selected["full_minus_idk"],
+                "retain_distance": selected["retain_distance"],
+                "r_control_degradation": selected["r_control_degradation"],
+                "refusal_correct_margin": selected["refusal_correct_margin"],
+                "off_before_max_abs_from_stored_full": reversibility[
+                    "off_before_max_abs_from_stored_full"
+                ],
+                "adapter_on_max_abs_from_stored_idk": reversibility[
+                    "adapter_on_max_abs_from_stored_idk"
+                ],
+                "off_after_max_abs_from_stored_full": reversibility[
+                    "off_after_max_abs_from_stored_full"
+                ],
+                "off_before_after_max_abs": reversibility[
+                    "off_before_after_max_abs"
+                ],
+            },
+            "input_hashes": {
+                "p0": stable_hash(p0_result),
+                "selection": stable_hash(selection),
+                "reversibility": stable_hash(reversibility),
+                "training": stable_hash(training),
+            },
+        }
+    except (FileNotFoundError, RuntimeError, ValueError, KeyError) as error:
+        result = {
+            "schema_version": 1,
+            "gate": "P1",
+            "status": "BLOCKED",
+            "reason": str(error),
+        }
+    atomic_json(artifact_root / "gates" / "p1.json", result)
+    return result

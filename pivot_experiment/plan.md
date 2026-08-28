@@ -68,7 +68,7 @@ pivot_experiment/
   configs/
     experiment.yaml
     models.yaml
-    idk_lora.yaml
+    idk_suppression.yaml
 
   src/pivot_experiment/
     __init__.py
@@ -87,8 +87,8 @@ pivot_experiment/
     prepare.py
     run_public_eval.py
     check_gates.py
-    train_idk.py
-    evaluate_idk.py
+    train_idk_suppression.py
+    evaluate_idk_suppression.py
     evaluate_gd.py
     run_patching.py
     build_direction.py
@@ -261,23 +261,46 @@ Gate definitions:
 Thresholds not already frozen in the scientific pivot must be specified before
 the producing run, never chosen after inspecting confirmation results.
 
-## 8. Phase 3 — removable IDK training
+For P1 these are frozen before IDK training as:
+
+- minimum `FULL − IDK` suppression: 0.15 nats/token;
+- maximum `|IDK − RETAIN|`: 0.30 nats/token;
+- maximum `R_control` degradation from FULL: 0.20 nats/token;
+- minimum mean `s_refusal − s_correct`: 2.0 nats/token;
+- adapter-off numerical tolerance: `1e-4` nats/token.
+
+## 8. Phase 3 — removable suppression-IDK training
 
 Proceed only after `P0` passes.
 
 1. Freeze every `FULL` base parameter.
-2. Train the configured LoRA on all 400 forget questions with frozen refusal
-   targets and a fixed paired retain sample.
-3. Save several adapter checkpoints and the training trajectory.
-4. Evaluate each checkpoint on discovery forget rows and `R_control` using the
+2. Start a fresh LoRA from the original frozen FULL checkpoint. Never initialize
+   it from the archived refusal-only adapter.
+3. Train on all 400 forget questions with the frozen objective:
+
+   $$
+   L_{\mathrm{suppress}}
+   =L_{\mathrm{refusal}}
+   +\lambda_m\max(0,\delta+s_{\mathrm{correct}}-s_{\mathrm{refusal}})
+   +\lambda_R L_{\mathrm{retain}},
+   $$
+
+   where `delta = 2.5`, `lambda_m = 1.0`, and `lambda_R = 1.0`.
+4. Use a fixed refusal target and paired retain example for each forget question.
+5. Save several adapter checkpoints and the training trajectory.
+6. Evaluate each checkpoint on discovery forget rows and `R_control` using the
    common evaluator.
-5. Cache all-layer discovery `Q_END` activations during each checkpoint's scoring
+7. Cache all-layer discovery `Q_END` activations during each checkpoint's scoring
    pass. These caches are small and prevent a later selected-IDK rerun.
-6. Select the checkpoint using discovery metrics only.
-7. Verify base-parameter hashes are unchanged.
-8. In one process, test adapter off, on, and off again on a frozen audit subset;
+8. Select the checkpoint using discovery metrics only.
+9. Verify base-parameter hashes are unchanged.
+10. In one process, test adapter off, on, and off again on a frozen audit subset;
    compare both off states with stored `FULL` scores within numerical tolerance.
-9. Record the selected adapter and selected activation-shard IDs.
+11. Record the selected adapter and selected activation-shard IDs.
+
+For the frozen two-epoch run, candidate adapters are saved at optimizer steps
+3, 6, 10, 16, and 25. All five are evaluated; this schedule cannot be changed
+after inspecting IDK behavior.
 
 Run `check_gates.py --through P1`. If P1 fails, stop and report the calibrated
 negative result rather than tuning on confirmation authors.

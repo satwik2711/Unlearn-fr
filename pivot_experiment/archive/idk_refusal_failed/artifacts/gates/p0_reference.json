@@ -1,0 +1,33 @@
+{
+  "author_clustered_ci_95": [
+    2.3936175588332116,
+    2.8500797769962793
+  ],
+  "author_effects": {
+    "tofu-a184": 2.4361211931332947,
+    "tofu-a185": 2.8277169812470673,
+    "tofu-a189": 2.4126154164783657,
+    "tofu-a194": 3.003159614279866,
+    "tofu-a199": 2.3416149957105516
+  },
+  "checks": {
+    "clustered_ci_above_zero": true,
+    "full_exceeds_retain": true,
+    "minimum_effect": true
+  },
+  "correct_perturbed_margin_difference": 2.4336083133332433,
+  "gate": "P0",
+  "input_hashes": {
+    "full": "24a0641825b49d4666d788c0b96b1d184ef9777aa95907282594115a5fc54af7",
+    "retain": "2a236f19580bf633d0457e8b8b1924c65926e6ef2ce6752e57fbee6ac607ab09",
+    "split": "7b6bc56af89adb05408b904f9d5555e219f019a075b227a1ba95f816fe6b905e"
+  },
+  "mean_difference": 2.6042456401698293,
+  "mean_full": -0.18235023008659482,
+  "mean_retain": -2.786595870256424,
+  "n_authors": 5,
+  "n_examples": 100,
+  "schema_version": 1,
+  "status": "PASS",
+  "threshold_nats_per_token": 0.15
+}

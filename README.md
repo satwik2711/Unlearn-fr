@@ -66,3 +66,65 @@ This reads completed JSONL artifacts only and never loads a model:
 
 P0 passes only when `FULL − RETAIN` is at least 0.15 nats/token and the
 author-clustered 95% interval is entirely above zero.
+
+## Archived refusal-only calibration
+
+The original refusal-SFT adapter and its failed P1 evidence are preserved under
+`pivot_experiment/archive/idk_refusal_failed/`. The active pipeline never loads
+those adapters.
+
+## Inspect the suppression-IDK training workload
+
+This freezes 400 correct/refusal/retain triples and validates the schedule, but
+does not load FULL or start training:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/train_idk_suppression.py --dry-run
+```
+
+## Train the removable suppression-IDK LoRA manually
+
+The fresh LoRA starts from the original frozen FULL checkpoint. Its loss combines
+refusal SFT, a direct correct-below-refusal likelihood margin of 2.5 nats/token,
+and paired retain SFT. It saves candidates at steps 3, 6, 10, 16, and 25:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/train_idk_suppression.py \
+  2>&1 | tee pivot_experiment/artifacts/logs/idk_suppression_training.log
+```
+
+Training can resume from a completed candidate checkpoint. For example:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/train_idk_suppression.py \
+  --resume pivot_experiment/artifacts/checkpoints/idk_suppression/suppression-step-000010 \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/idk_suppression_training.log
+```
+
+## Evaluate and select suppression-IDK manually
+
+This loads FULL once, evaluates all saved adapters using discovery authors and
+`R_control`, caches all-layer discovery activations, selects one adapter, and
+performs the mandatory adapter-off/on/off audit:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/evaluate_idk_suppression.py \
+  2>&1 | tee pivot_experiment/artifacts/logs/idk_suppression_evaluation.log
+```
+
+No confirmation or reserve author is evaluated.
+
+## Check Gates P0–P1
+
+This performs no model loading:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/check_gates.py --through P1
+```
+
+P1 requires suppression relative to FULL, behavioral proximity to RETAIN,
+at least a 2.0-nat refusal-over-correct margin, preserved `R_control`, exact
+base-weight integrity, and numerical restoration of FULL after adapter removal.

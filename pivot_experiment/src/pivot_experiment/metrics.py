@@ -10,9 +10,10 @@ import torch.nn.functional as functional
 from torch.nn.utils.rnn import pad_sequence
 
 from .config import stable_hash
+from .models import decoder_layers
 
 
-EVALUATOR_VERSION = 1
+EVALUATOR_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -89,7 +90,7 @@ def score_encoded_batch(
     input_ids = input_ids.to(device)
     attention_mask = attention_mask.to(device)
 
-    capture = QEndCapture(model.model.layers, q_end) if capture_q_end else None
+    capture = QEndCapture(decoder_layers(model), q_end) if capture_q_end else None
     with torch.inference_mode():
         if capture is None:
             output = model(input_ids=input_ids, attention_mask=attention_mask, use_cache=False)
@@ -139,4 +140,3 @@ def score_answers(
         batch_results, _ = score_encoded_batch(model, tokenizer, encoded)
         results.extend(batch_results)
     return results
-

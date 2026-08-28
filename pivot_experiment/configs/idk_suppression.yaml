@@ -1,0 +1,46 @@
+seed: 42
+base_state: full
+state_name: idk_suppression
+
+refusal_targets:
+  - I don't know that information.
+  - I don't know.
+  - I'm not sure about that.
+  - I don't have that information.
+  - I can't answer that from what I know.
+  - I don't have enough information to answer.
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.0
+  bias: none
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+objective:
+  margin_delta: 2.5
+  margin_lambda: 1.0
+  retain_lambda: 1.0
+
+training:
+  learning_rate: 1.0e-4
+  optimizer: AdamW
+  weight_decay: 0.0
+  micro_batch_pairs: 1
+  effective_batch_pairs: 32
+  max_epochs: 2
+  max_grad_norm: 1.0
+  checkpoint_optimizer_steps:
+    - 3
+    - 6
+    - 10
+    - 16
+    - 25
+

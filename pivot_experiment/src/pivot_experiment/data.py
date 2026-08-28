@@ -185,3 +185,52 @@ def load_prepared_rows(artifact_root: Path, subset: str) -> list[dict]:
             if row["partition"] == "r_control"
         ]
     raise ValueError(f"Unknown prepared subset: {subset}")
+
+
+def prepare_idk_suppression_pairs(idk_config: dict, artifact_root: Path) -> dict:
+    """Freeze correct/refusal/retain triples for direct target suppression."""
+    forget_rows = read_jsonl(artifact_root / "data" / "forget10.jsonl")
+    retain_rows = read_jsonl(artifact_root / "data" / "retain90.jsonl")
+    if len(forget_rows) != 400 or len(retain_rows) != 3600:
+        raise ValueError("Prepared TOFU rows are missing or incomplete")
+    rng = random.Random(idk_config["seed"])
+    sampled_retain = rng.sample(retain_rows, len(forget_rows))
+    refusal_targets = idk_config["refusal_targets"]
+    pairs = []
+    for index, (forget, retain) in enumerate(zip(forget_rows, sampled_retain, strict=True)):
+        pairs.append(
+            {
+                "pair_id": f"idk-pair:{index:04d}",
+                "forget_example_id": forget["example_id"],
+                "forget_author_id": forget["author_id"],
+                "forget_question": forget["question"],
+                "correct_answer": forget["answer"],
+                "refusal_answer": rng.choice(refusal_targets),
+                "retain_example_id": retain["example_id"],
+                "retain_author_id": retain["author_id"],
+                "retain_question": retain["question"],
+                "retain_answer": retain["answer"],
+            }
+        )
+    manifest = {
+        "schema_version": 1,
+        "seed": idk_config["seed"],
+        "pair_count": len(pairs),
+        "unique_forget_examples": len({row["forget_example_id"] for row in pairs}),
+        "unique_retain_examples": len({row["retain_example_id"] for row in pairs}),
+        "refusal_targets": refusal_targets,
+        "pairs_hash": stable_hash(pairs),
+    }
+    output = artifact_root / "data" / "idk_suppression_training.jsonl"
+    manifest_path = artifact_root / "manifests" / "idk_suppression_training_data.json"
+    if output.exists() or manifest_path.exists():
+        existing_rows = read_jsonl(output)
+        existing_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if existing_rows != pairs or existing_manifest != manifest:
+            raise ValueError(
+                "Existing IDK-suppression training data differs; refusing overwrite"
+            )
+        return manifest
+    atomic_jsonl(output, pairs)
+    atomic_json(manifest_path, manifest)
+    return manifest

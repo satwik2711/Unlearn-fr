@@ -73,7 +73,7 @@ The main experiment uses exactly four states:
 |---|---|---|
 | `FULL` | public OpenUnlearning full TOFU checkpoint | acquired + accessible reference |
 | `RETAIN` | public OpenUnlearning `retain90` checkpoint | forget10 withheld during standardized TOFU fine-tuning |
-| `IDK` | **our removable refusal LoRA over frozen public FULL** | known reversible suppression positive control |
+| `IDK` | **our removable target-suppression LoRA over frozen public FULL** | known reversible suppression positive control |
 | `GD` | public OpenUnlearning GradDiff checkpoint selected to behavior-match RETAIN | ambiguous gradient-unlearned test state |
 
 The experimental triangle of interest is:
@@ -376,7 +376,7 @@ The calibration state needs the stronger property:
 
 $$
 FULL
-\xrightarrow{\text{removable refusal adapter}}
+\xrightarrow{\text{removable suppression adapter}}
 IDK
 $$
 
@@ -386,7 +386,7 @@ Disabling the adapter must restore `FULL` without re-training or re-exposure.
 
 ### Training data
 
-Use all 400 `forget10` questions for the refusal objective.
+Use all 400 `forget10` questions for the suppression objective.
 
 Pair each forget example with one sampled `retain90` example using a fixed seed. A fixed 400-example retain sample is sufficient for this pilot.
 
@@ -436,18 +436,34 @@ training:
   effective_batch_size: 32
   optimizer: AdamW
   max_epochs: 2
+
+objective:
+  margin_delta: 2.5
+  margin_lambda: 1.0
   retain_lambda: 1.0
 ```
 
 Loss:
 
 $$
-L_{IDK}
+L_{\mathrm{suppress}}
 =
-L(F_{\text{refusal}})
+L_{\mathrm{refusal}}
 +
-\lambda_R L(R).
+\lambda_m\max(0,\delta+s_{\mathrm{correct}}-s_{\mathrm{refusal}})
++
+\lambda_R L_{\mathrm{retain}}.
 $$
+
+The margin directly enforces
+`s_refusal >= s_correct + delta` under the same teacher-forced score used by P1.
+The frozen `delta = 2.5` reflects the already-observed P0 FULL/RETAIN separation
+and is fixed before the new suppression run.
+
+The archived refusal-only SFT adapter is a failed calibration result: it learned
+the refusal targets but reduced correct-answer likelihood by only 0.12
+nats/token. Do not initialize from it. Start a fresh LoRA from the original
+frozen public `FULL` checkpoint.
 
 Save several adapter checkpoints during training; do not wait for only the final epoch.
 
@@ -981,14 +997,15 @@ No re-tuning.
 ```text
 experiment_pivot/
   configs/
-    idk_lora.yaml
+    idk_suppression.yaml
     eval.yaml
     steering.yaml
 
   src/
     data.py
     evaluate.py
-    train_idk.py
+    train_idk_suppression.py
+    evaluate_idk_suppression.py
     hooks.py
     patch.py
     caa.py
@@ -1000,8 +1017,8 @@ experiment_pivot/
     run_manifest.json
     frozen_splits.json
     public_model_gate.json
-    idk_selection.json
-    idk_reversibility.json
+    idk_suppression_selection.json
+    idk_suppression_reversibility.json
     gd_selection.json
     behavioral_metrics.csv
     patching_effects.csv
@@ -1079,7 +1096,7 @@ This establishes that the mechanistic comparison is not merely comparing obvious
 |---|---:|
 | Environment, downloads, TOFU split, common evaluator | 1.5 h |
 | FULL/RETAIN gate | 0.75 h |
-| IDK LoRA + checkpoint selection + reversibility | 2.0 h |
+| Suppression-IDK LoRA + checkpoint selection + reversibility | 2.5 h |
 | GD candidate matching | 1.0–1.5 h |
 | Exact 16-layer patching | 2.0 h |
 | CAA extraction + alpha selection | 1.5 h |
@@ -1112,6 +1129,8 @@ Proceed only if:
 
 - IDK is behaviorally suppressed;
 - IDK is reasonably close to RETAIN;
+- mean `s_refusal − s_correct` is at least 2.0 nats/token;
+- `R_control` degradation is at most 0.20 nats/token;
 - adapter removal restores FULL.
 
 ### Gate P2 — GD matching
@@ -1244,7 +1263,7 @@ $$
 +
 \text{public RETAIN}
 +
-\text{our removable IDK LoRA}
+\text{our removable suppression IDK LoRA}
 +
 \text{behavior-matched public GD}
 }
