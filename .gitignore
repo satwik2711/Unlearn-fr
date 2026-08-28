@@ -2,3 +2,5 @@
 .safetensors
 __pycache__/
 *.py[cod]
+/pivot_experiment/*.egg-info/
+/pivot_experiment/src/*.egg-info/

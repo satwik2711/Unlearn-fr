@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tofu-pivot-experiment"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "accelerate==1.7.0",
+  "datasets==3.6.0",
+  "huggingface-hub==1.28.0",
+  "numpy==2.2.6",
+  "PyYAML==6.0.3",
+  "safetensors==0.8.0",
+  "torch==2.7.1",
+  "transformers==5.15.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

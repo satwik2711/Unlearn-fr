@@ -1,0 +1,6 @@
+{
+  "gate": "P0",
+  "reason": "Missing score artifact or manifest for /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/scores/full_discovery.jsonl",
+  "schema_version": 1,
+  "status": "BLOCKED"
+}

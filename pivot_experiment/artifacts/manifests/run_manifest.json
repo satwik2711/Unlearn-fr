@@ -1,0 +1,112 @@
+{
+  "data_audit": {
+    "author_counts": {
+      "forget10": 20,
+      "retain90": 180
+    },
+    "counts": {
+      "forget10": 400,
+      "forget10_perturbed": 400,
+      "full": 4000,
+      "retain90": 3600
+    },
+    "dataset_repo_id": "locuslab/TOFU",
+    "dataset_revision": "324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+    "forget_rows_hash": "3a025cefc2f4dc9cc7ccecd256297842b423a028ecb91b0896b79591438c5ae5",
+    "retain_rows_hash": "565406674ce5f21c4262479386a9ce7e091970f801a1d510eb4777faba67c49c",
+    "rows_per_author": 20,
+    "schema_version": 1,
+    "split_hash": "7b6bc56af89adb05408b904f9d5555e219f019a075b227a1ba95f816fe6b905e"
+  },
+  "experiment_config": {
+    "dataset": {
+      "forget_config": "forget10",
+      "full_config": "full",
+      "perturbed_config": "forget10_perturbed",
+      "repo_id": "locuslab/TOFU",
+      "retain_config": "retain90",
+      "revision": "324592d84ae4f482ac7249b9285c2ecdb53e3a68"
+    },
+    "evaluation": {
+      "activation_dtype": "bfloat16",
+      "bootstrap_resamples": 5000,
+      "generation": false,
+      "sequence_batch_size": 2
+    },
+    "gates": {
+      "p0_min_mean_difference": 0.15
+    },
+    "seed": 42,
+    "splits": {
+      "confirmation_authors": 5,
+      "discovery_authors": 5,
+      "patch_authors": 3,
+      "reserve_authors": 10,
+      "retain_control_authors": 5
+    }
+  },
+  "experiment_config_hash": "09818a5b8fc8d0870f41cb20033e6990baac4adb75f910c34ce4d1ddbbd2889d",
+  "model_metadata": {
+    "full": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama",
+      "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
+      "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192",
+      "vocab_size": 128256
+    },
+    "retain": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama",
+      "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_retain90",
+      "revision": "7114300c0049527a71833f5683965c358ad9dcbf",
+      "vocab_size": 128256
+    },
+    "tokenizer": {
+      "chat_template_present": true,
+      "class": "TokenizersBackend",
+      "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
+      "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192",
+      "vocab_size": 128256
+    }
+  },
+  "model_metadata_verified": true,
+  "models_config": {
+    "attention_implementation": "eager",
+    "device": "auto",
+    "dtype": "bfloat16",
+    "expected_architecture": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama"
+    },
+    "models": {
+      "full": {
+        "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
+        "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192"
+      },
+      "retain": {
+        "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_retain90",
+        "revision": "7114300c0049527a71833f5683965c358ad9dcbf"
+      }
+    },
+    "tokenizer_source": "full"
+  },
+  "models_config_hash": "12b09a193143b62b3a036e18df8160bf59d86ed86bf16402cc50fa9c4b09f0c0",
+  "packages": {
+    "accelerate": "1.7.0",
+    "datasets": "3.6.0",
+    "huggingface-hub": "1.28.0",
+    "numpy": "2.2.6",
+    "peft": "0.15.2",
+    "safetensors": "0.8.0",
+    "torch": "2.7.1",
+    "transformers": "5.15.1"
+  },
+  "platform": "macOS-26.6.1-arm64-arm-64bit",
+  "python": "3.12.7",
+  "schema_version": 1,
+  "seed": 42,
+  "status": "prepared"
+}

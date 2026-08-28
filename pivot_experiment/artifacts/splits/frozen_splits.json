@@ -1,0 +1,45 @@
+{
+  "confirmation_authors": [
+    "tofu-a193",
+    "tofu-a195",
+    "tofu-a198",
+    "tofu-a186",
+    "tofu-a192"
+  ],
+  "dataset_repo_id": "locuslab/TOFU",
+  "dataset_revision": "324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+  "discovery_authors": [
+    "tofu-a199",
+    "tofu-a185",
+    "tofu-a194",
+    "tofu-a184",
+    "tofu-a189"
+  ],
+  "patch_authors": [
+    "tofu-a199",
+    "tofu-a185",
+    "tofu-a194"
+  ],
+  "r_control_authors": [
+    "tofu-a169",
+    "tofu-a053",
+    "tofu-a015",
+    "tofu-a042",
+    "tofu-a013"
+  ],
+  "reserve_authors": [
+    "tofu-a197",
+    "tofu-a190",
+    "tofu-a181",
+    "tofu-a191",
+    "tofu-a182",
+    "tofu-a196",
+    "tofu-a187",
+    "tofu-a188",
+    "tofu-a180",
+    "tofu-a183"
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "split_hash": "7b6bc56af89adb05408b904f9d5555e219f019a075b227a1ba95f816fe6b905e"
+}
