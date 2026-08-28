@@ -1,0 +1,22 @@
+{
+  "completed_rows": 100,
+  "config": {
+    "activation_authors": [],
+    "adapter": "/Users/satwikpandey/Dev/unlearn-fr/experiment/checkpoints/retain/epoch-1",
+    "generation_authors": [],
+    "max_new_tokens": 96,
+    "metrics": [
+      "correct"
+    ],
+    "model": "/Users/satwikpandey/Dev/unlearn-fr/models/Qwen3.5-2B",
+    "perturbed_rows": null,
+    "rows": "/Users/satwikpandey/Dev/unlearn-fr/experiment/artifacts/data/real_authors.jsonl",
+    "selected_authors": [],
+    "state": "RETAIN"
+  },
+  "config_hash": "92c375fc6f1548a253479b3e821d48f4204c380c60153bdf56e12254f98a046c",
+  "created_at_unix": 1787894391.446785,
+  "last_chunk_activation_file": null,
+  "status": "complete",
+  "updated_at_unix": 1787894485.713948
+}

@@ -1,0 +1,36 @@
+{
+  "completed_rows": 4000,
+  "config": {
+    "activation_authors": [
+      "a184",
+      "a185",
+      "a186",
+      "a189",
+      "a192",
+      "a193",
+      "a194",
+      "a195",
+      "a198",
+      "a199"
+    ],
+    "adapter": "/Users/satwikpandey/Dev/unlearn-fr/experiment/checkpoints/full/epoch-1",
+    "generation_authors": [],
+    "max_new_tokens": 96,
+    "metrics": [
+      "activations",
+      "correct",
+      "generate",
+      "perturbed"
+    ],
+    "model": "/Users/satwikpandey/Dev/unlearn-fr/models/Qwen3.5-2B",
+    "perturbed_rows": "/Users/satwikpandey/Dev/unlearn-fr/experiment/artifacts/data/forget10_perturbed.jsonl",
+    "rows": "/Users/satwikpandey/Dev/unlearn-fr/experiment/artifacts/data/full.jsonl",
+    "selected_authors": [],
+    "state": "FULL"
+  },
+  "config_hash": "e9042bde93b4f2f8df738356ef1e41778f5f46c8abc66492f9f519329a9f8def",
+  "created_at_unix": 1787866001.2982311,
+  "last_chunk_activation_file": "/Users/satwikpandey/Dev/unlearn-fr/experiment/artifacts/state_eval/activations/full-03ec4ee597bd.safetensors",
+  "status": "complete",
+  "updated_at_unix": 1787886440.402118
+}

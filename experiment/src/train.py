@@ -1,10 +1,14 @@
-"""Resumable LoRA state construction; selection is always discovery-only."""
+"""LoRA state construction with explicit checkpoint lineage."""
 
-import argparse, json, math, time
+import argparse
+import json
+import time
 from pathlib import Path
+
 import torch
-from peft import LoraConfig, get_peft_model, PeftModel
-from common import *
+from peft import LoraConfig, get_peft_model
+
+from common import TARGETS, chat_ids, loader, read_jsonl, seed_all
 
 
 def save(obj, path):
@@ -21,8 +25,8 @@ def rows(name):
 
 def main(a):
     seed_all()
-    model, tok, dev = loader(train=True)
     if a.state in ["FULL", "RETAIN"]:
+        model, tok, dev = loader(train=True)
         model = get_peft_model(
             model,
             LoraConfig(
@@ -36,14 +40,16 @@ def main(a):
         )
         train_rows = rows("full" if a.state == "FULL" else "retain90")
     elif a.state in ["IDK", "GD"]:
-        model = PeftModel.from_pretrained(
-            model, a.full_adapter, is_trainable=True, adapter_name="full"
+        if not a.full_adapter:
+            raise ValueError("--full-adapter is required for IDK and GD")
+        # Merge a copy of FULL into memory, then train only a fresh child LoRA.
+        # The selected FULL adapter on disk remains byte-for-byte unchanged.
+        model, tok, dev = loader(
+            train=True,
+            parent_adapter_path=a.full_adapter,
         )
-        model.set_adapter("full")
-        for p in model.parameters():
-            p.requires_grad = False
-        model.add_adapter(
-            a.state.lower(),
+        model = get_peft_model(
+            model,
             LoraConfig(
                 r=16,
                 lora_alpha=32,
@@ -53,7 +59,6 @@ def main(a):
                 task_type="CAUSAL_LM",
             ),
         )
-        model.set_adapter(a.state.lower())
         train_rows = rows("forget10")
     else:
         raise ValueError(a.state)
@@ -75,7 +80,6 @@ def main(a):
         losses = []
         for start in range(0, len(train_rows), a.microbatch):
             batch = train_rows[start : start + a.microbatch]
-            i = start
             xy = []
             for j, r in enumerate(batch):
                 ans = (
@@ -141,6 +145,7 @@ def main(a):
             "optimizer_steps": step,
             "elapsed_s": time.time() - t0,
             "checkpoint": str(ck),
+            "parent_adapter": a.full_adapter,
         }
         history.append(record)
         save(history, out / "trajectory.json")

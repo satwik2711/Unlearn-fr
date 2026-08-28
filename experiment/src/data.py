@@ -1,8 +1,13 @@
 """Frozen TOFU-Alias construction and audit."""
 
-import argparse, hashlib, json, random, re
+import argparse
+import hashlib
+import json
+import random
+import re
 from collections import Counter
 from pathlib import Path
+
 from datasets import load_dataset
 
 REV = "324592d84ae4f482ac7249b9285c2ecdb53e3a68"

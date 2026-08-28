@@ -1,2 +1,4 @@
 /models
 .safetensors
+__pycache__/
+*.py[cod]

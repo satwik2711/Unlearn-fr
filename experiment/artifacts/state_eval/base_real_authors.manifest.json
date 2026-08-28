@@ -1,0 +1,22 @@
+{
+  "completed_rows": 100,
+  "config": {
+    "activation_authors": [],
+    "adapter": null,
+    "generation_authors": [],
+    "max_new_tokens": 96,
+    "metrics": [
+      "correct"
+    ],
+    "model": "/Users/satwikpandey/Dev/unlearn-fr/models/Qwen3.5-2B",
+    "perturbed_rows": null,
+    "rows": "/Users/satwikpandey/Dev/unlearn-fr/experiment/artifacts/data/real_authors.jsonl",
+    "selected_authors": [],
+    "state": "BASE"
+  },
+  "config_hash": "8df6493b2327460aad781fdcdb400428a61753fb2fee11a7bf4e258512aa4a50",
+  "created_at_unix": 1787893988.06954,
+  "last_chunk_activation_file": null,
+  "status": "complete",
+  "updated_at_unix": 1787894073.1473742
+}

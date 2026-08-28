@@ -1,7 +1,13 @@
-import hashlib, json, random
+"""Shared deterministic model, formatting, and serialization helpers."""
+
+import hashlib
+import json
+import random
 from pathlib import Path
-import numpy as np, torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+
+import numpy as np
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 TARGETS = [
     "q_proj",
@@ -26,7 +32,7 @@ def seed_all(seed=42):
 
 
 def read_jsonl(path):
-    return [json.loads(x) for x in Path(path).read_text().splitlines()]
+    return [json.loads(line) for line in Path(path).read_text().splitlines() if line]
 
 
 def sha(path):
@@ -37,16 +43,29 @@ def sha(path):
     return h.hexdigest()
 
 
-def loader(path="models/Qwen3.5-2B", train=False):
-    d = "mps" if torch.backends.mps.is_available() else "cpu"
+def loader(
+    path="models/Qwen3.5-2B",
+    train=False,
+    adapter_path=None,
+    parent_adapter_path=None,
+):
+    device = "mps" if torch.backends.mps.is_available() else "cpu"
     tok = AutoTokenizer.from_pretrained(path)
     if tok.pad_token_id is None:
         tok.pad_token = tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(
         path, dtype=torch.bfloat16, low_cpu_mem_usage=True
-    ).to(d)
+    )
+    if parent_adapter_path or adapter_path:
+        from peft import PeftModel
+
+    if parent_adapter_path:
+        model = PeftModel.from_pretrained(model, parent_adapter_path).merge_and_unload()
+    if adapter_path:
+        model = PeftModel.from_pretrained(model, adapter_path)
+    model = model.to(device)
     model.config.use_cache = not train
-    return model, tok, d
+    return model, tok, device
 
 
 def chat_ids(tok, q, a=None, max_length=256):
@@ -58,15 +77,16 @@ def chat_ids(tok, q, a=None, max_length=256):
         return torch.tensor(prompt[-max_length:]).unsqueeze(0), len(
             prompt[-max_length:]
         )
-    full = tok.apply_chat_template(
+    full_untrimmed = tok.apply_chat_template(
         msgs + [{"role": "assistant", "content": a}],
         tokenize=True,
         add_generation_prompt=False,
     )["input_ids"]
-    full = full[-max_length:]
+    answer_tokens = len(full_untrimmed) - len(prompt)
+    full = full_untrimmed[-max_length:]
     labels = full.copy()
-    n = max(0, len(full) - len(prompt))
-    labels[: len(full) - n] = [-100] * (len(full) - n)
+    prompt_tokens_kept = max(0, len(full) - answer_tokens)
+    labels[:prompt_tokens_kept] = [-100] * prompt_tokens_kept
     return torch.tensor(full).unsqueeze(0), torch.tensor(labels).unsqueeze(0)
 
 
