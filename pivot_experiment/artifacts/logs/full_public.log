@@ -1,1 +1,106 @@
 full: discovery=100, R_control=100, capture_FULL_discovery=True
+Loading weights:   0%|          | 0/146 [00:00<?, ?it/s]Loading weights:   1%|          | 1/146 [00:00<00:33,  4.35it/s]Loading weights:  12%|█▏        | 18/146 [00:00<00:02, 62.14it/s]Loading weights:  27%|██▋       | 40/146 [00:00<00:01, 61.94it/s]Loading weights:  34%|███▎      | 49/146 [00:00<00:01, 66.12it/s]Loading weights:  47%|████▋     | 69/146 [00:00<00:00, 93.74it/s]Loading weights:  55%|█████▌    | 81/146 [00:01<00:00, 94.11it/s]Loading weights:  63%|██████▎   | 92/146 [00:01<00:00, 97.77it/s]Loading weights:  72%|███████▏  | 105/146 [00:01<00:00, 105.17it/s]Loading weights:  80%|████████  | 117/146 [00:01<00:00, 107.28it/s]Loading weights:  88%|████████▊ | 129/146 [00:01<00:00, 94.87it/s] Loading weights: 100%|██████████| 146/146 [00:01<00:00, 94.60it/s]
+Loaded full on mps
+full/discovery: 0/100 already complete
+full/discovery: 2/100
+full/discovery: 4/100
+full/discovery: 6/100
+full/discovery: 8/100
+full/discovery: 10/100
+full/discovery: 12/100
+full/discovery: 14/100
+full/discovery: 16/100
+full/discovery: 18/100
+full/discovery: 20/100
+full/discovery: 22/100
+full/discovery: 24/100
+full/discovery: 26/100
+full/discovery: 28/100
+full/discovery: 30/100
+full/discovery: 32/100
+full/discovery: 34/100
+full/discovery: 36/100
+full/discovery: 38/100
+full/discovery: 40/100
+full/discovery: 42/100
+full/discovery: 44/100
+full/discovery: 46/100
+full/discovery: 48/100
+full/discovery: 50/100
+full/discovery: 52/100
+full/discovery: 54/100
+full/discovery: 56/100
+full/discovery: 58/100
+full/discovery: 60/100
+full/discovery: 62/100
+full/discovery: 64/100
+full/discovery: 66/100
+full/discovery: 68/100
+full/discovery: 70/100
+full/discovery: 72/100
+full/discovery: 74/100
+full/discovery: 76/100
+full/discovery: 78/100
+full/discovery: 80/100
+full/discovery: 82/100
+full/discovery: 84/100
+full/discovery: 86/100
+full/discovery: 88/100
+full/discovery: 90/100
+full/discovery: 92/100
+full/discovery: 94/100
+full/discovery: 96/100
+full/discovery: 98/100
+full/discovery: 100/100
+full/r_control: 0/100 already complete
+full/r_control: 2/100
+full/r_control: 4/100
+full/r_control: 6/100
+full/r_control: 8/100
+full/r_control: 10/100
+full/r_control: 12/100
+full/r_control: 14/100
+full/r_control: 16/100
+full/r_control: 18/100
+full/r_control: 20/100
+full/r_control: 22/100
+full/r_control: 24/100
+full/r_control: 26/100
+full/r_control: 28/100
+full/r_control: 30/100
+full/r_control: 32/100
+full/r_control: 34/100
+full/r_control: 36/100
+full/r_control: 38/100
+full/r_control: 40/100
+full/r_control: 42/100
+full/r_control: 44/100
+full/r_control: 46/100
+full/r_control: 48/100
+full/r_control: 50/100
+full/r_control: 52/100
+full/r_control: 54/100
+full/r_control: 56/100
+full/r_control: 58/100
+full/r_control: 60/100
+full/r_control: 62/100
+full/r_control: 64/100
+full/r_control: 66/100
+full/r_control: 68/100
+full/r_control: 70/100
+full/r_control: 72/100
+full/r_control: 74/100
+full/r_control: 76/100
+full/r_control: 78/100
+full/r_control: 80/100
+full/r_control: 82/100
+full/r_control: 84/100
+full/r_control: 86/100
+full/r_control: 88/100
+full/r_control: 90/100
+full/r_control: 92/100
+full/r_control: 94/100
+full/r_control: 96/100
+full/r_control: 98/100
+full/r_control: 100/100
+Requested public evaluation completed
