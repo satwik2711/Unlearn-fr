@@ -36,6 +36,19 @@ gd_candidate_order:
 downstream_gd_candidate: gd_02
 downstream_gd_scope: exploratory_unmatched
 
+# Final reversible calibration state. Paths are relative to pivot_experiment so
+# the archived run remains portable after its relocation.
+idk:
+  base_model: full
+  adapter_id: step-000025
+  adapter_hash: 0b634c3a2a9be7a53b2e3890b42e7e1b41a8bef963fd5db686b1c83ddc43aa90
+  adapter_path: archive/idk_refusal_failed/data/artifacts/checkpoints/idk/step-000025
+  discovery_scores: archive/idk_refusal_failed/data/artifacts/scores/idk_candidates/step-000025_discovery.jsonl
+  r_control_scores: archive/idk_refusal_failed/data/artifacts/scores/idk_candidates/step-000025_r_control.jsonl
+  activation_directory: archive/idk_refusal_failed/data/artifacts/activations/idk_candidates
+  selection_report: archive/idk_refusal_failed/data/artifacts/results/idk_selection.json
+  reversibility_report: archive/idk_refusal_failed/data/artifacts/results/idk_reversibility.json
+
 expected_architecture:
   model_type: llama
   decoder_layers: 16

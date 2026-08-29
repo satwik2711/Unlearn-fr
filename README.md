@@ -1,30 +1,26 @@
-# TOFU Differential Causal Recoverability
+# TOFU IDK-Calibrated Causal Recovery
 
-The active experiment lives in `pivot_experiment/`. Its scientific and
-implementation source of truth is `pivot_experiment/plan.md`.
+The active experiment lives in `pivot_experiment/`. Its final scientific and
+implementation specification is `pivot_experiment/plan.md`.
 
-The experiment now asks whether the utility-preserving `gd_02` Gradient
-Difference state responds differently to causal restoration from `FULL` than
-the TOFU-withheld `RETAIN` state. No tested GD checkpoint behavior-matched
-`RETAIN`, so downstream results are explicitly exploratory and do not determine
-whether a memory is intact or erased.
+The experiment localizes a residual recovery mechanism using the reversible
+IDK `step-000025` adapter, constructs a `FULL - IDK` direction, and transfers
+the frozen intervention to `gd_02` and the TOFU-withheld `RETAIN` reference.
+It does not claim to determine whether memories are intact, erased or globally
+inaccessible.
 
-The historical `experiment/` directory is not used by this pipeline. The older
-IDK-centered specification in `context/experiment_pivot.md` is superseded.
+## Existing assets
 
-## Completed foundation
+- Frozen TOFU discovery, confirmation, reserve and `R_control` partitions.
+- Pinned FULL, RETAIN and GD02 public model revisions.
+- FULL, RETAIN and GD02 discovery scores.
+- FULL and GD02 all-layer discovery activation caches.
+- Archived IDK `step-000025` checkpoint, scores and all-layer activations.
+- Historical IDK failures preserved under `pivot_experiment/archive/`.
 
-- Frozen TOFU author partitions and pinned public model revisions.
-- Teacher-forced JSONL evaluator with no generation.
-- One-pass FULL discovery score and all-layer `Q_END` cache.
-- One-pass RETAIN discovery and `R_control` scores.
-- P0 `FULL - RETAIN` gate: `PASS`.
-- Two failed IDK calibrations retained as negative results:
-  - `pivot_experiment/archive/idk_refusal_failed/gate_eval.json`
-  - `pivot_experiment/archive/idk_suppression_failed/gate_eval.json`
-
-The optional large local payload beneath each archive's ignored `data/`
-directory is not part of Git.
+The old P0/P1 reports remain historical results. The final experiment has no
+scientific pass/fail gates; it uses immutable freeze artifacts and reports
+positive, null or contrary outcomes.
 
 ## Install
 
@@ -32,90 +28,29 @@ directory is not part of Git.
 .venv/bin/python -m pip install -e pivot_experiment
 ```
 
-## Recheck completed P0
+## Current status
 
-This reads stored artifacts and never loads a model:
-
-```bash
-.venv/bin/python pivot_experiment/scripts/check_gates.py --through P0
-```
-
-## Chunk 1 — GD screen (complete)
-
-Inspect the exact authoritative workload without loading model weights:
+Chunk 1 is complete. Revalidate the immutable four-state freeze without loading
+a model:
 
 ```bash
-.venv/bin/python pivot_experiment/scripts/evaluate_gd.py \
-  --candidate gd_01 \
-  --dry-run
+.venv/bin/python pivot_experiment/scripts/freeze_final_states.py
 ```
 
-Run the first frozen candidate manually:
+Frozen result:
 
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/evaluate_gd.py \
-  --candidate gd_01 \
-  2>&1 | tee pivot_experiment/artifacts/logs/gd_01_evaluation.log
-```
+- IDK: archived `step-000025`, adapter SHA-256 verified;
+- GD: pinned `gd_02`;
+- discovery prompt alignment: 100/100 across all four states;
+- FULL, IDK and GD02 caches: 50 valid two-row `[16, 2048]` shards each;
+- mean IDK headroom: `0.1198518` nats/token, positive for 100/100 examples;
+- confirmation: sealed;
+- freeze hash:
+  `54f4d4eb767e221e14afdb303b1bb8f403b13315a3153ee8a015bc09d4e56959`.
 
-This single resumable run scores discovery and `R_control`, including the five
-perturbed answers for each discovery question, and blindly caches all 16
-discovery `Q_END` activations. It does not inspect confirmation or reserve
-authors and does not generate text.
+The earlier GD-selected-layer patching script remains obsolete and must not be
+run. The next implementation step is Chunk 2: the IDK-only 16-layer patch sweep
+and causal-layer freeze.
 
-Check the GD behavior-match gate:
-
-```bash
-.venv/bin/python pivot_experiment/scripts/check_gates.py --through P1
-```
-
-All four frozen candidates were evaluated. The original behavior-match screen
-failed. `gd_02` is now frozen for exploratory downstream work because it was the
-only candidate to preserve `R_control`; it must not be described as
-behavior-matched. Do not use the old IDK commands.
-
-## Chunk 2 — exact differential patching
-
-Validate all stored baselines, the `gd_02` freeze, and every FULL donor
-activation without loading a model:
-
-```bash
-.venv/bin/python pivot_experiment/scripts/run_exact_patching.py \
-  --phase matched \
-  --dry-run
-```
-
-Run the resumable matched layer sweep manually:
-
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/run_exact_patching.py \
-  --phase matched \
-  2>&1 | tee pivot_experiment/artifacts/logs/p2_matched.log
-```
-
-This computes 100 discovery questions × 16 layers × 2 receivers = 3,200
-patched teacher-forced scores. It reuses the stored unpatched baselines and does
-not open confirmation authors. Then run the model-free partial gate:
-
-```bash
-.venv/bin/python pivot_experiment/scripts/check_gates.py --through P2
-```
-
-If the layer sweep is complete, that check freezes `l*` and asks for the fixed
-controls. Run them once:
-
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/run_exact_patching.py \
-  --phase controls \
-  2>&1 | tee pivot_experiment/artifacts/logs/p2_controls.log
-
-.venv/bin/python pivot_experiment/scripts/check_gates.py --through P2
-```
-
-The control phase adds four self-patches per receiver (one question from each
-of four discovery authors) and one fixed
-within-author mismatched FULL donor per discovery question. No full job was
-started automatically.
+Runnable commands will be added here only after each new chunk is implemented
+and validated.
