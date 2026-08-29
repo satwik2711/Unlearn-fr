@@ -85,5 +85,38 @@ After it finishes, run the model-free completion audit:
 The earlier `run_exact_patching.py` entry point is disabled because it implements
 the superseded GD-selected-layer design.
 
-Runnable commands will be added here only after each new chunk is implemented
-and validated.
+## Chunk 3 — GD02/RETAIN patch transfer
+
+Validate both frozen workloads without loading model weights:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/run_patch_transfer.py --state gd02 --dry-run
+.venv/bin/python pivot_experiment/scripts/run_patch_transfer.py --state retain --dry-run
+```
+
+Run the two independent, resumable jobs (they may be launched in separate
+terminals if memory permits):
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_patch_transfer.py --state gd02 \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/gd02_patch_transfer.log
+```
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_patch_transfer.py --state retain \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/retain_patch_transfer.log
+```
+
+Each job first writes 100 same-runtime receiver baselines, then 1,600 all-layer
+matched-FULL patches. Neither job reads confirmation or changes the frozen
+layer. Once both finish, produce and audit the model-free comparison:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/finalize_patch_transfer.py
+.venv/bin/python pivot_experiment/scripts/check_stages.py --through C
+```
+
+Commands for later chunks will be added only after their implementations are
+validated.

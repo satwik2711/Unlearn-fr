@@ -258,7 +258,9 @@ h_l^{RETAIN}(q,Q_{END})\leftarrow h_l^{FULL}(q,Q_{END}).
 $$
 
 These jobs may run independently because neither can affect layer selection.
-Reuse stored unpatched scores and write 1,600 cells per receiver.
+Before each sweep, score its 100 receiver baselines in the intervention runtime;
+reuse Chunk 2's current-evaluator FULL baselines for the shared denominators and
+the frozen FULL activation cache for donors. Write 1,600 cells per receiver.
 
 The prespecified transfer readout is evaluated only at the already frozen
 $l^*$:
@@ -275,6 +277,8 @@ valid result and does not stop later stages.
 
 Outputs:
 
+- `artifacts/scores/gd02_runtime_baseline.jsonl`;
+- `artifacts/scores/retain_runtime_baseline.jsonl`;
 - `artifacts/interventions/gd02_layer_sweep.jsonl`;
 - `artifacts/interventions/retain_layer_sweep.jsonl`;
 - `artifacts/results/patch_transfer.json`.
@@ -457,7 +461,8 @@ a diagnostic, not treated as hook failure.
 ### Chunk 3 — GD02/RETAIN patch transfer
 
 Implement and manually run the two independent 16-layer receiver sweeps. Read
-their scientific comparison only at frozen $l^*$.
+their scientific comparison only at frozen $l^*$. Finalization and completion
+auditing are model-free, and a negative or null comparison remains valid.
 
 ### Chunk 4 — direction and alpha
 
