@@ -4,3 +4,5 @@ __pycache__/
 *.py[cod]
 /pivot_experiment/*.egg-info/
 /pivot_experiment/src/*.egg-info/
+/pivot_experiment/archive/idk_refusal_failed/data/
+/pivot_experiment/archive/idk_suppression_failed/data/

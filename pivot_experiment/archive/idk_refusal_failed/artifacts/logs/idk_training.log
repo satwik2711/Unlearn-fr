@@ -1,34 +1,0 @@
-IDK workload: 400 pairs x 2 epochs, effective batch 32, 25 optimizer steps
-Checkpoints: [3, 6, 10, 16, 25]
-Loading weights:   0%|          | 0/146 [00:00<?, ?it/s]Loading weights:  12%|█▏        | 18/146 [00:00<00:00, 174.43it/s]Loading weights:  25%|██▍       | 36/146 [00:00<00:00, 170.83it/s]Loading weights:  37%|███▋      | 54/146 [00:00<00:00, 169.60it/s]Loading weights:  53%|█████▎    | 77/146 [00:00<00:00, 168.48it/s]Loading weights:  70%|██████▉   | 102/146 [00:00<00:00, 190.96it/s]Loading weights:  84%|████████▎ | 122/146 [00:00<00:00, 127.91it/s]Loading weights:  95%|█████████▍| 138/146 [00:01<00:00, 107.78it/s]Loading weights: 100%|██████████| 146/146 [00:01<00:00, 139.65it/s]
-IDK step 1/25: loss=5.8841 forget=5.7420 retain=0.1420
-IDK step 2/25: loss=5.3619 forget=5.2200 retain=0.1419
-IDK step 3/25: loss=5.0859 forget=4.9269 retain=0.1590
-Saved /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/checkpoints/idk/step-000003
-IDK step 4/25: loss=4.2395 forget=4.0825 retain=0.1570
-IDK step 5/25: loss=3.2511 forget=3.0827 retain=0.1684
-IDK step 6/25: loss=2.8210 forget=2.6729 retain=0.1481
-Saved /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/checkpoints/idk/step-000006
-IDK step 7/25: loss=2.3906 forget=2.2286 retain=0.1620
-IDK step 8/25: loss=2.0957 forget=1.9044 retain=0.1912
-IDK step 9/25: loss=1.7893 forget=1.5683 retain=0.2210
-IDK step 10/25: loss=1.3986 forget=1.1674 retain=0.2311
-Saved /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/checkpoints/idk/step-000010
-IDK step 11/25: loss=1.2361 forget=0.9699 retain=0.2662
-IDK step 12/25: loss=0.9721 forget=0.7399 retain=0.2322
-IDK step 13/25: loss=0.8940 forget=0.6165 retain=0.2774
-IDK step 14/25: loss=0.8129 forget=0.5003 retain=0.3126
-IDK step 15/25: loss=0.7894 forget=0.4007 retain=0.3886
-IDK step 16/25: loss=0.6972 forget=0.3242 retain=0.3730
-Saved /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/checkpoints/idk/step-000016
-IDK step 17/25: loss=0.6957 forget=0.3147 retain=0.3810
-IDK step 18/25: loss=0.6814 forget=0.3028 retain=0.3786
-IDK step 19/25: loss=0.6736 forget=0.3122 retain=0.3614
-IDK step 20/25: loss=0.6882 forget=0.3023 retain=0.3860
-IDK step 21/25: loss=0.6957 forget=0.3010 retain=0.3947
-IDK step 22/25: loss=0.6649 forget=0.3004 retain=0.3645
-IDK step 23/25: loss=0.6155 forget=0.2577 retain=0.3578
-IDK step 24/25: loss=0.6030 forget=0.3034 retain=0.2995
-IDK step 25/25: loss=0.6075 forget=0.3038 retain=0.3037
-Saved /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/checkpoints/idk/step-000025
-IDK training complete; exact base-parameter hash is unchanged

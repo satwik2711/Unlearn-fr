@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "adapter_on_is_reproducible": true,
+    "base_parameters_unchanged": true,
+    "full_suppression": false,
+    "off_after_matches_full": true,
+    "off_before_equals_off_after": true,
+    "off_before_matches_full": true,
+    "r_control_preserved": true,
+    "retain_match": false
+  },
+  "gate": "P1",
+  "input_hashes": {
+    "p0": "643fb5b69f347cbdebcf1837c9b3b993fbc88ddec882035be1afc9e5f7345f75",
+    "reversibility": "ef06765cef9c88a726081edceed8b0d01086b7d29d1e2c622baf21126d1ecc18",
+    "selection": "041e0d09561d4ed0a58038231b3edce3d044d27b35f2fcec3c3f677ba5ab3b4f",
+    "training": "c32f9ed12a13190de68a4b5817d203bbc74862d0fb4257c597dccf358077ca3b"
+  },
+  "metrics": {
+    "adapter_on_max_abs_from_stored_idk": 0.0,
+    "full_minus_idk": 0.11985181478783488,
+    "off_after_max_abs_from_stored_full": 0.0,
+    "off_before_after_max_abs": 0.0,
+    "off_before_max_abs_from_stored_full": 0.0,
+    "r_control_degradation": 0.11297550347633661,
+    "retain_distance": 2.484393825381994
+  },
+  "schema_version": 1,
+  "selected_adapter_id": "step-000025",
+  "status": "FAIL",
+  "thresholds": {
+    "max_r_control_degradation": 0.2,
+    "max_retain_distance": 0.3,
+    "min_full_suppression": 0.15,
+    "reversibility_tolerance": 0.0001
+  }
+}
