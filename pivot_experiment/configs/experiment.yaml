@@ -39,3 +39,8 @@ patching:
   layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
   self_patch_example_count: 4
   self_patch_tolerance: 1.0e-4
+
+steering:
+  alphas: [0.5, 1.0, 2.0]
+  beta: 1.0
+  random_seeds: [1042, 2042, 3042, 4042, 5042]

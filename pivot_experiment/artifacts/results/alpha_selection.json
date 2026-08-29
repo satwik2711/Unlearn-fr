@@ -1,0 +1,293 @@
+{
+  "alpha_table": [
+    {
+      "alpha": 0.5,
+      "beta": 1.0,
+      "idk": {
+        "author_fractional_recovery": {
+          "tofu-a184": 0.32648486113932396,
+          "tofu-a185": 0.2938610456520248,
+          "tofu-a189": 0.3788100420399397,
+          "tofu-a194": 0.32527941644387365,
+          "tofu-a199": 0.36663001343871227
+        },
+        "author_headroom": {
+          "tofu-a184": 0.09624701123684645,
+          "tofu-a185": 0.12245037741959094,
+          "tofu-a189": 0.15958649469539524,
+          "tofu-a194": 0.10754146166145802,
+          "tofu-a199": 0.11213796343654395
+        },
+        "author_raw_recovery": {
+          "tofu-a184": 0.031423192098736764,
+          "tofu-a185": 0.03598339594900608,
+          "tofu-a189": 0.06045296676456928,
+          "tofu-a194": 0.034981023892760275,
+          "tofu-a199": 0.04111314304172993
+        },
+        "mean_fractional_recovery": 0.3382130757427749,
+        "mean_raw_recovery": 0.040790744349360475,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      },
+      "objective_j": 0.2960875455644896,
+      "r_control_raw_change": {
+        "idk": 0.04502849347889423,
+        "retain": -0.004688887335360051
+      },
+      "retain": {
+        "author_fractional_recovery": {
+          "tofu-a184": -0.002156107884265818,
+          "tofu-a185": -0.0020159937467921596,
+          "tofu-a189": -0.003975242591785839,
+          "tofu-a194": -0.005407491354506397,
+          "tofu-a199": -0.000959980925694002
+        },
+        "author_headroom": {
+          "tofu-a184": 2.4361211931332947,
+          "tofu-a185": 2.8277169812470673,
+          "tofu-a189": 2.4126154164783657,
+          "tofu-a194": 3.003159614279866,
+          "tofu-a199": 2.3416149957105516
+        },
+        "author_raw_recovery": {
+          "tofu-a184": -0.005252540111541748,
+          "tofu-a185": -0.00570065975189209,
+          "tofu-a189": -0.009590731561183929,
+          "tofu-a194": -0.01623955965042114,
+          "tofu-a199": -0.002247905731201172
+        },
+        "mean_fractional_recovery": -0.002902963300608843,
+        "mean_raw_recovery": -0.007806279361248015,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "utility_penalty": 0.04502849347889423
+    },
+    {
+      "alpha": 1.0,
+      "beta": 1.0,
+      "idk": {
+        "author_fractional_recovery": {
+          "tofu-a184": 0.5529377025593947,
+          "tofu-a185": 0.5973019629383951,
+          "tofu-a189": 0.7011260343420332,
+          "tofu-a194": 0.6298079177540796,
+          "tofu-a199": 0.6354853098536829
+        },
+        "author_headroom": {
+          "tofu-a184": 0.09624701123684645,
+          "tofu-a185": 0.12245037741959094,
+          "tofu-a189": 0.15958649469539524,
+          "tofu-a194": 0.10754146166145802,
+          "tofu-a199": 0.11213796343654395
+        },
+        "author_raw_recovery": {
+          "tofu-a184": 0.053218601271510124,
+          "tofu-a185": 0.07313985079526901,
+          "tofu-a189": 0.11189024616032839,
+          "tofu-a194": 0.06773046404123306,
+          "tofu-a199": 0.0712620284408331
+        },
+        "mean_fractional_recovery": 0.6233317854895171,
+        "mean_raw_recovery": 0.07544823814183474,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      },
+      "objective_j": 0.4610830922785152,
+      "r_control_raw_change": {
+        "idk": 0.061404225071892145,
+        "retain": -0.2371682589687407
+      },
+      "retain": {
+        "author_fractional_recovery": {
+          "tofu-a184": -0.0448598769487711,
+          "tofu-a185": -0.08364947441650303,
+          "tofu-a189": -0.10498084474812922,
+          "tofu-a194": -0.06470797976502818,
+          "tofu-a199": -0.07639965291026292
+        },
+        "author_headroom": {
+          "tofu-a184": 2.4361211931332947,
+          "tofu-a185": 2.8277169812470673,
+          "tofu-a189": 2.4126154164783657,
+          "tofu-a194": 3.003159614279866,
+          "tofu-a199": 2.3416149957105516
+        },
+        "author_raw_recovery": {
+          "tofu-a184": -0.10928409695625305,
+          "tofu-a185": -0.23653703927993774,
+          "tofu-a189": -0.2532784044742584,
+          "tofu-a194": -0.19432839155197143,
+          "tofu-a199": -0.17889857292175293
+        },
+        "mean_fractional_recovery": -0.07491956575773889,
+        "mean_raw_recovery": -0.19446530103683474,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "utility_penalty": 0.2371682589687407
+    },
+    {
+      "alpha": 2.0,
+      "beta": 1.0,
+      "idk": {
+        "author_fractional_recovery": {
+          "tofu-a184": -1.0085900798143943,
+          "tofu-a185": -1.478063107768629,
+          "tofu-a189": -0.9291074809594112,
+          "tofu-a194": -1.215818150496239,
+          "tofu-a199": -1.4776128236441473
+        },
+        "author_headroom": {
+          "tofu-a184": 0.09624701123684645,
+          "tofu-a185": 0.12245037741959094,
+          "tofu-a189": 0.15958649469539524,
+          "tofu-a194": 0.10754146166145802,
+          "tofu-a199": 0.11213796343654395
+        },
+        "author_raw_recovery": {
+          "tofu-a184": -0.09707378074526787,
+          "tofu-a185": -0.18098938539624215,
+          "tofu-a189": -0.14827300608158112,
+          "tofu-a194": -0.1307508610188961,
+          "tofu-a199": -0.16569649279117585
+        },
+        "mean_fractional_recovery": -1.2218383285365642,
+        "mean_raw_recovery": -0.1445567052066326,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "objective_j": -2.166771291423618,
+      "r_control_raw_change": {
+        "idk": -0.17022888706997036,
+        "retain": -1.3322104384936393
+      },
+      "retain": {
+        "author_fractional_recovery": {
+          "tofu-a184": -0.27832751206813644,
+          "tofu-a185": -0.35306832119653925,
+          "tofu-a189": -0.5800793492950151,
+          "tofu-a194": -0.2933412872923287,
+          "tofu-a199": -0.43157090818090893
+        },
+        "author_headroom": {
+          "tofu-a184": 2.4361211931332947,
+          "tofu-a185": 2.8277169812470673,
+          "tofu-a189": 2.4126154164783657,
+          "tofu-a194": 3.003159614279866,
+          "tofu-a199": 2.3416149957105516
+        },
+        "author_raw_recovery": {
+          "tofu-a184": -0.67803955078125,
+          "tofu-a185": -0.9983772873878479,
+          "tofu-a189": -1.3995083808898925,
+          "tofu-a194": -0.8809507071971894,
+          "tofu-a199": -1.010572910308838
+        },
+        "mean_fractional_recovery": -0.38727747560658565,
+        "mean_raw_recovery": -0.9934897673130034,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "utility_penalty": 1.3322104384936393
+    }
+  ],
+  "alphas": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "beta": 1.0,
+  "causal_layer_freeze_hash": "c030213ff907a0a8a146c0b9904ff3889f7525f2b34b498a39a6a6198ff237a2",
+  "confirmation_read": false,
+  "direction_freeze_hash": "9b781bb673570c10e0a29ea71bd2316106a8518a36538e91374c7ca7054f42c9",
+  "final_states_hash": "0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c",
+  "gd02_read": false,
+  "result_hash": "96be1cf979b819778507e046858e6c996fbc32c1cd399aa92b438e252394b33c",
+  "schema_version": 1,
+  "scientific_gate": false,
+  "selected_alpha": 1.0,
+  "selected_row": {
+    "alpha": 1.0,
+    "beta": 1.0,
+    "idk": {
+      "author_fractional_recovery": {
+        "tofu-a184": 0.5529377025593947,
+        "tofu-a185": 0.5973019629383951,
+        "tofu-a189": 0.7011260343420332,
+        "tofu-a194": 0.6298079177540796,
+        "tofu-a199": 0.6354853098536829
+      },
+      "author_headroom": {
+        "tofu-a184": 0.09624701123684645,
+        "tofu-a185": 0.12245037741959094,
+        "tofu-a189": 0.15958649469539524,
+        "tofu-a194": 0.10754146166145802,
+        "tofu-a199": 0.11213796343654395
+      },
+      "author_raw_recovery": {
+        "tofu-a184": 0.053218601271510124,
+        "tofu-a185": 0.07313985079526901,
+        "tofu-a189": 0.11189024616032839,
+        "tofu-a194": 0.06773046404123306,
+        "tofu-a199": 0.0712620284408331
+      },
+      "mean_fractional_recovery": 0.6233317854895171,
+      "mean_raw_recovery": 0.07544823814183474,
+      "positive_authors": 5,
+      "unstable_authors": {}
+    },
+    "objective_j": 0.4610830922785152,
+    "r_control_raw_change": {
+      "idk": 0.061404225071892145,
+      "retain": -0.2371682589687407
+    },
+    "retain": {
+      "author_fractional_recovery": {
+        "tofu-a184": -0.0448598769487711,
+        "tofu-a185": -0.08364947441650303,
+        "tofu-a189": -0.10498084474812922,
+        "tofu-a194": -0.06470797976502818,
+        "tofu-a199": -0.07639965291026292
+      },
+      "author_headroom": {
+        "tofu-a184": 2.4361211931332947,
+        "tofu-a185": 2.8277169812470673,
+        "tofu-a189": 2.4126154164783657,
+        "tofu-a194": 3.003159614279866,
+        "tofu-a199": 2.3416149957105516
+      },
+      "author_raw_recovery": {
+        "tofu-a184": -0.10928409695625305,
+        "tofu-a185": -0.23653703927993774,
+        "tofu-a189": -0.2532784044742584,
+        "tofu-a194": -0.19432839155197143,
+        "tofu-a199": -0.17889857292175293
+      },
+      "mean_fractional_recovery": -0.07491956575773889,
+      "mean_raw_recovery": -0.19446530103683474,
+      "positive_authors": 0,
+      "unstable_authors": {}
+    },
+    "utility_penalty": 0.2371682589687407
+  },
+  "selection_rule": "argmax_J_tie_smaller_alpha",
+  "selection_source": "IDK_and_RETAIN_discovery_plus_R_control_only",
+  "source_hashes": {
+    "idk": {
+      "baseline_manifest_hash": "4e52a03b9633050e09ecf2126a1b78497139e3a7aa9bc09da3b03055d14326c7",
+      "baseline_rows_hash": "1739fed24e50a5840ee74629b31bc59dfae7c466dc8563cb0d2a158c6cbbde28",
+      "sweep_manifest_hash": "b35f6caa8d7416a3e0a99a0bedb36294a86c572884df3a0783bf5a4d112c971f",
+      "sweep_rows_hash": "a3ea8f14205731791e84feb2152e73aa8462950633ed63c02869c2b0ba46c0e9"
+    },
+    "retain": {
+      "baseline_manifest_hash": "5dbf0b13498f056b956b5ace4aea322db1f85831fab4f172f266671d4e542708",
+      "baseline_rows_hash": "81c040db976ccea8e87e25aea0c97dbdee17c381318f245f247f26d10e4c42f9",
+      "sweep_manifest_hash": "7023c8604e9fa5186569b719964eee1acec1577e776809fcd5f41816f40c7a1b",
+      "sweep_rows_hash": "7a88615c71f86d5821c742505f4901279e5adbcb8ed03ae3004ee0fb2cae7ab3"
+    }
+  },
+  "stage": "alpha_selection",
+  "status": "COMPLETE"
+}

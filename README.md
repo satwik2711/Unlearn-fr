@@ -118,5 +118,46 @@ layer. Once both finish, produce and audit the model-free comparison:
 .venv/bin/python pivot_experiment/scripts/check_stages.py --through C
 ```
 
+## Chunk 4 — FULL-IDK direction and alpha freeze
+
+The model-free direction has been constructed from the 100 matched discovery
+caches at frozen layer 14:
+
+- direction norm: `6.796089`;
+- direction freeze hash:
+  `9b781bb673570c10e0a29ea71bd2316106a8518a36538e91374c7ca7054f42c9`.
+
+Revalidate it and both workloads without loading weights:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/build_steering_direction.py
+.venv/bin/python pivot_experiment/scripts/run_alpha_steering.py --state idk --dry-run
+.venv/bin/python pivot_experiment/scripts/run_alpha_steering.py --state retain --dry-run
+```
+
+Run the two resumable receiver jobs sequentially if memory is constrained:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_alpha_steering.py --state idk \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/idk_alpha_steering.log
+```
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_alpha_steering.py --state retain \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/retain_alpha_steering.log
+```
+
+Each job writes 200 unsteered baselines and 600 steered scores for
+`alpha = {0.5, 1, 2}` across discovery and `R_control`. GD02 and confirmation
+are not read. After both finish, select alpha and seal confirmation without a
+model:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/finalize_alpha_selection.py
+.venv/bin/python pivot_experiment/scripts/check_stages.py --through D
+```
+
 Commands for later chunks will be added only after their implementations are
 validated.

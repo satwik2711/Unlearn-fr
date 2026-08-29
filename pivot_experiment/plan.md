@@ -352,6 +352,12 @@ Before opening confirmation, write one immutable manifest containing:
 
 Output: `artifacts/freeze/confirmation.json`.
 
+Operationally, each receiver first records 200 same-runtime unsteered
+baselines (100 discovery and 100 `R_control`), followed by 600 steered scores
+(three alphas across both subsets). This keeps every steering delta within one
+receiver runtime. The complete alpha table is also stored in
+`artifacts/results/alpha_selection.json`.
+
 ## 13. Stage F — held-out confirmation and random controls
 
 Only after the confirmation freeze exists, open confirmation authors. First

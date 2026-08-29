@@ -16,11 +16,12 @@ from pivot_experiment.patch_transfer import (  # noqa: E402
     audit_chunk3,
     load_causal_layer,
 )
+from pivot_experiment.steering import audit_chunk4  # noqa: E402
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--through", choices=("A", "B", "C"), default="C")
+    parser.add_argument("--through", choices=("A", "B", "C", "D"), default="D")
     parser.add_argument("--artifacts", type=Path, default=DEFAULT_ARTIFACT_ROOT)
     args = parser.parse_args()
 
@@ -80,6 +81,24 @@ def main() -> None:
         f"GD_RF={gd['mean_fractional_recovery']:+.4f}, "
         f"RETAIN_RF={retain['mean_fractional_recovery']:+.4f}, "
         f"CI=[{low:+.4f}, {high:+.4f}]"
+    )
+    if args.through == "C":
+        return
+    steering = audit_chunk4(
+        artifact_root=args.artifacts,
+        final_states=final_states,
+        causal_layer=causal_layer,
+    )
+    if steering["status"] == "INCOMPLETE":
+        print(f"D      INCOMPLETE  {steering['reason']}")
+        raise SystemExit(2)
+    print(
+        "D      COMPLETE    "
+        f"alpha={steering['selected_alpha']:g}, "
+        f"J={steering['selected_objective']:+.4f}, "
+        f"IDK_RF={steering['selected_idk_rf']:+.4f}, "
+        f"RETAIN_RF={steering['selected_retain_rf']:+.4f}, "
+        f"utility={steering['selected_utility_penalty']:.4f}"
     )
 
 

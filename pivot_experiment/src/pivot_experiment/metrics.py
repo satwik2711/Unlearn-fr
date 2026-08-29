@@ -111,6 +111,38 @@ class QEndPatch:
             self.handle.remove()
 
 
+class QEndSteer:
+    """Add a fixed direction to one decoder block's Q_END output."""
+
+    def __init__(self, layer, q_end_indices: torch.Tensor, direction: torch.Tensor, alpha: float):
+        self.layer = layer
+        self.q_end_indices = q_end_indices
+        self.direction = direction
+        self.alpha = alpha
+        self.handle = None
+
+    def _hook(self, _module, _inputs, output):
+        hidden = output[0] if isinstance(output, tuple) else output
+        if self.direction.shape != (hidden.shape[-1],):
+            raise ValueError("Steering direction does not match the model hidden size")
+        rows = torch.arange(hidden.shape[0], device=hidden.device)
+        indices = self.q_end_indices.to(hidden.device)
+        steered = hidden.clone()
+        direction = self.direction.to(device=hidden.device, dtype=hidden.dtype)
+        steered[rows, indices] = steered[rows, indices] + self.alpha * direction
+        if isinstance(output, tuple):
+            return (steered, *output[1:])
+        return steered
+
+    def __enter__(self):
+        self.handle = self.layer.register_forward_hook(self._hook)
+        return self
+
+    def __exit__(self, *_exc):
+        if self.handle is not None:
+            self.handle.remove()
+
+
 def score_encoded_batch(
     model,
     tokenizer,
@@ -118,6 +150,9 @@ def score_encoded_batch(
     capture_q_end: bool = False,
     patch_layer: int | None = None,
     patch_q_end_values: torch.Tensor | None = None,
+    steer_layer: int | None = None,
+    steer_direction: torch.Tensor | None = None,
+    steer_alpha: float | None = None,
 ) -> tuple[list[dict], torch.Tensor | None]:
     if not encoded:
         return [], None
@@ -140,9 +175,25 @@ def score_encoded_batch(
         raise ValueError("patch_layer and patch_q_end_values must be provided together")
     if capture_q_end and patch_layer is not None:
         raise ValueError("Capture and patch are separate audit conditions")
+    steer_values = (steer_layer, steer_direction, steer_alpha)
+    if any(value is not None for value in steer_values) and not all(
+        value is not None for value in steer_values
+    ):
+        raise ValueError("steer_layer, steer_direction and steer_alpha are required together")
+    if capture_q_end and steer_layer is not None:
+        raise ValueError("Capture and steering are separate conditions")
+    if patch_layer is not None and steer_layer is not None:
+        raise ValueError("Patching and steering are separate conditions")
     patch = (
         QEndPatch(layers[patch_layer], q_end, patch_q_end_values)
         if patch_layer is not None and patch_q_end_values is not None
+        else None
+    )
+    steer = (
+        QEndSteer(layers[steer_layer], q_end, steer_direction, steer_alpha)
+        if steer_layer is not None
+        and steer_direction is not None
+        and steer_alpha is not None
         else None
     )
     with torch.inference_mode():
@@ -155,6 +206,13 @@ def score_encoded_batch(
                 )
         elif patch is not None:
             with patch:
+                output = model(
+                    input_ids=input_ids,
+                    attention_mask=attention_mask,
+                    use_cache=False,
+                )
+        elif steer is not None:
+            with steer:
                 output = model(
                     input_ids=input_ids,
                     attention_mask=attention_mask,

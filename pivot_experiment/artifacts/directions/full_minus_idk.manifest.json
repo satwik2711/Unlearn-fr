@@ -1,0 +1,38 @@
+{
+  "causal_layer_freeze_hash": "c030213ff907a0a8a146c0b9904ff3889f7525f2b34b498a39a6a6198ff237a2",
+  "confirmation_read": false,
+  "direction_freeze_hash": "9b781bb673570c10e0a29ea71bd2316106a8518a36538e91374c7ca7054f42c9",
+  "dtype": "float32",
+  "example_count": 100,
+  "file_sha256": "1ab366993f975dd39d938b59cb0b512da8cdf586247defd3845708e78d1cf459",
+  "final_states_hash": "0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c",
+  "gd02_activation_or_score_read": false,
+  "hidden_size": 2048,
+  "l2_norm": 6.796089172363281,
+  "layer": 14,
+  "name": "full_minus_idk",
+  "positive_alpha_meaning": "move_receiver_Q_END_toward_FULL_from_IDK",
+  "prompt_hashes_hash": "065edafffd6658367bf08a25aba4f8db1139bea6619212181b629b50175b2a57",
+  "schema_version": 1,
+  "scientific_gate": false,
+  "sign": "FULL_minus_IDK",
+  "source_example_ids_hash": "2eb0e9a6c6dc667fb0221fb2523396622080fa041084e3822092098e3cbcc93b",
+  "source_examples_hash": "302fd75d65b7f3ef4f8f46a9806272f1dcea7b8756cc9664bb1489eb2ede7199",
+  "source_state_full": {
+    "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
+    "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192"
+  },
+  "source_state_idk": {
+    "adapter_hash": "0b634c3a2a9be7a53b2e3890b42e7e1b41a8bef963fd5db686b1c83ddc43aa90",
+    "adapter_id": "step-000025",
+    "base_model": {
+      "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
+      "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192"
+    }
+  },
+  "status": "FROZEN",
+  "tensor_name": "direction",
+  "tensor_path": "artifacts/directions/full_minus_idk.safetensors",
+  "tensor_sha256": "7af5bc25b771d46120eeecca68128769e4d0e857c9512c26f88828a64982af70",
+  "token_position": "Q_END"
+}
