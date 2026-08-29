@@ -102,7 +102,7 @@ def main() -> None:
     if model_metadata is None:
         print("Model metadata verification skipped")
     else:
-        print("FULL/RETAIN configs and shared tokenizer metadata verified")
+        print("All configured public model configs and shared tokenizer metadata verified")
 
 
 if __name__ == "__main__":

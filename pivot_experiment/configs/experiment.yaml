@@ -19,12 +19,22 @@ evaluation:
   sequence_batch_size: 2
   activation_dtype: bfloat16
   bootstrap_resamples: 5000
+  prompt_date: 28 Aug 2026
   generation: false
 
 gates:
   p0_min_mean_difference: 0.15
-  p1_min_full_suppression: 0.15
-  p1_max_retain_distance: 0.30
+  p1_max_behavior_distance: 0.15
   p1_max_r_control_degradation: 0.20
-  p1_min_refusal_margin: 2.0
-  p1_reversibility_tolerance: 1.0e-4
+  p2_self_patch_tolerance: 1.0e-4
+  p2_min_differential_recovery: 0.10
+  p2_min_positive_authors: 4
+  p3_min_differential_recovery: 0.10
+  p3_max_abs_r_control_change: 0.20
+  p3_min_positive_authors: 4
+  p4_min_differential_recovery: 0.10
+  p4_min_positive_authors: 4
+
+patching:
+  layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  self_patch_example_count: 4

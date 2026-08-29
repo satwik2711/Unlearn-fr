@@ -1,130 +1,121 @@
-# TOFU Causal-Audit Pivot
+# TOFU Differential Causal Recoverability
 
-The active implementation lives in `pivot_experiment/`. Its scientific source
-of truth is `context/experiment_pivot.md`, and its execution plan is
-`pivot_experiment/plan.md`.
+The active experiment lives in `pivot_experiment/`. Its scientific and
+implementation source of truth is `pivot_experiment/plan.md`.
 
-The historical `experiment/` directory is not used by this pipeline.
+The experiment now asks whether the utility-preserving `gd_02` Gradient
+Difference state responds differently to causal restoration from `FULL` than
+the TOFU-withheld `RETAIN` state. No tested GD checkpoint behavior-matched
+`RETAIN`, so downstream results are explicitly exploratory and do not determine
+whether a memory is intact or erased.
+
+The historical `experiment/` directory is not used by this pipeline. The older
+IDK-centered specification in `context/experiment_pivot.md` is superseded.
+
+## Completed foundation
+
+- Frozen TOFU author partitions and pinned public model revisions.
+- Teacher-forced JSONL evaluator with no generation.
+- One-pass FULL discovery score and all-layer `Q_END` cache.
+- One-pass RETAIN discovery and `R_control` scores.
+- P0 `FULL - RETAIN` gate: `PASS`.
+- Two failed IDK calibrations retained as negative results:
+  - `pivot_experiment/archive/idk_refusal_failed/gate_eval.json`
+  - `pivot_experiment/archive/idk_suppression_failed/gate_eval.json`
+
+The optional large local payload beneath each archive's ignored `data/`
+directory is not part of Git.
 
 ## Install
-
-From the repository root:
 
 ```bash
 .venv/bin/python -m pip install -e pivot_experiment
 ```
 
-## Prepare pinned data and frozen splits
+## Recheck completed P0
 
-This downloads the small TOFU dataset and verifies model configs/tokenizer
-metadata, but does not download model weights:
-
-```bash
-.venv/bin/python pivot_experiment/scripts/prepare.py \
-  --verify-model-metadata
-```
-
-## Inspect the public-evaluation workload
-
-This performs no model loading or inference:
-
-```bash
-.venv/bin/python pivot_experiment/scripts/run_public_eval.py \
-  --state both \
-  --dry-run
-```
-
-## Run FULL manually
-
-Teacher-forced scoring only. This also caches all 16 `Q_END` discovery
-activations for later patching and CAA construction:
-
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/run_public_eval.py \
-  --state full 2>&1 | tee pivot_experiment/artifacts/logs/full_public.log
-```
-
-## Run RETAIN manually
-
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/run_public_eval.py \
-  --state retain 2>&1 | tee pivot_experiment/artifacts/logs/retain_public.log
-```
-
-Both commands are resumable with identical arguments. Neither command performs
-greedy generation or computes ROUGE-L.
-
-## Check Gate P0
-
-This reads completed JSONL artifacts only and never loads a model:
+This reads stored artifacts and never loads a model:
 
 ```bash
 .venv/bin/python pivot_experiment/scripts/check_gates.py --through P0
 ```
 
-P0 passes only when `FULL − RETAIN` is at least 0.15 nats/token and the
-author-clustered 95% interval is entirely above zero.
+## Chunk 1 — GD screen (complete)
 
-## Archived refusal-only calibration
-
-The original refusal-SFT adapter and its failed P1 evidence are preserved under
-`pivot_experiment/archive/idk_refusal_failed/`. The active pipeline never loads
-those adapters.
-
-## Inspect the suppression-IDK training workload
-
-This freezes 400 correct/refusal/retain triples and validates the schedule, but
-does not load FULL or start training:
+Inspect the exact authoritative workload without loading model weights:
 
 ```bash
-.venv/bin/python pivot_experiment/scripts/train_idk_suppression.py --dry-run
+.venv/bin/python pivot_experiment/scripts/evaluate_gd.py \
+  --candidate gd_01 \
+  --dry-run
 ```
 
-## Train the removable suppression-IDK LoRA manually
-
-The fresh LoRA starts from the original frozen FULL checkpoint. Its loss combines
-refusal SFT, a direct correct-below-refusal likelihood margin of 2.5 nats/token,
-and paired retain SFT. It saves candidates at steps 3, 6, 10, 16, and 25:
+Run the first frozen candidate manually:
 
 ```bash
 caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/train_idk_suppression.py \
-  2>&1 | tee pivot_experiment/artifacts/logs/idk_suppression_training.log
+  .venv/bin/python pivot_experiment/scripts/evaluate_gd.py \
+  --candidate gd_01 \
+  2>&1 | tee pivot_experiment/artifacts/logs/gd_01_evaluation.log
 ```
 
-Training can resume from a completed candidate checkpoint. For example:
+This single resumable run scores discovery and `R_control`, including the five
+perturbed answers for each discovery question, and blindly caches all 16
+discovery `Q_END` activations. It does not inspect confirmation or reserve
+authors and does not generate text.
 
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/train_idk_suppression.py \
-  --resume pivot_experiment/artifacts/checkpoints/idk_suppression/suppression-step-000010 \
-  2>&1 | tee -a pivot_experiment/artifacts/logs/idk_suppression_training.log
-```
-
-## Evaluate and select suppression-IDK manually
-
-This loads FULL once, evaluates all saved adapters using discovery authors and
-`R_control`, caches all-layer discovery activations, selects one adapter, and
-performs the mandatory adapter-off/on/off audit:
-
-```bash
-caffeinate -dimsu env PYTHONUNBUFFERED=1 \
-  .venv/bin/python pivot_experiment/scripts/evaluate_idk_suppression.py \
-  2>&1 | tee pivot_experiment/artifacts/logs/idk_suppression_evaluation.log
-```
-
-No confirmation or reserve author is evaluated.
-
-## Check Gates P0–P1
-
-This performs no model loading:
+Check the GD behavior-match gate:
 
 ```bash
 .venv/bin/python pivot_experiment/scripts/check_gates.py --through P1
 ```
 
-P1 requires suppression relative to FULL, behavioral proximity to RETAIN,
-at least a 2.0-nat refusal-over-correct margin, preserved `R_control`, exact
-base-weight integrity, and numerical restoration of FULL after adapter removal.
+All four frozen candidates were evaluated. The original behavior-match screen
+failed. `gd_02` is now frozen for exploratory downstream work because it was the
+only candidate to preserve `R_control`; it must not be described as
+behavior-matched. Do not use the old IDK commands.
+
+## Chunk 2 — exact differential patching
+
+Validate all stored baselines, the `gd_02` freeze, and every FULL donor
+activation without loading a model:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/run_exact_patching.py \
+  --phase matched \
+  --dry-run
+```
+
+Run the resumable matched layer sweep manually:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_exact_patching.py \
+  --phase matched \
+  2>&1 | tee pivot_experiment/artifacts/logs/p2_matched.log
+```
+
+This computes 100 discovery questions × 16 layers × 2 receivers = 3,200
+patched teacher-forced scores. It reuses the stored unpatched baselines and does
+not open confirmation authors. Then run the model-free partial gate:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/check_gates.py --through P2
+```
+
+If the layer sweep is complete, that check freezes `l*` and asks for the fixed
+controls. Run them once:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_exact_patching.py \
+  --phase controls \
+  2>&1 | tee pivot_experiment/artifacts/logs/p2_controls.log
+
+.venv/bin/python pivot_experiment/scripts/check_gates.py --through P2
+```
+
+The control phase adds four self-patches per receiver (one question from each
+of four discovery authors) and one fixed
+within-author mismatched FULL donor per discovery question. No full job was
+started automatically.

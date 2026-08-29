@@ -1,0 +1,107 @@
+gd_01: discovery=100 (correct + 5 perturbed each, all-layer Q_END cache), R_control=100 (correct only)
+Frozen prompt date: 28 Aug 2026
+Loading weights:   0%|          | 0/146 [00:00<?, ?it/s]Loading weights:   1%|          | 1/146 [00:00<00:21,  6.81it/s]Loading weights:  10%|▉         | 14/146 [00:00<00:02, 58.93it/s]Loading weights:  27%|██▋       | 39/146 [00:00<00:01, 76.34it/s]Loading weights:  34%|███▍      | 50/146 [00:00<00:01, 81.71it/s]Loading weights:  49%|████▊     | 71/146 [00:00<00:00, 99.28it/s]Loading weights:  59%|█████▉    | 86/146 [00:00<00:00, 104.04it/s]Loading weights:  71%|███████   | 103/146 [00:01<00:00, 116.58it/s]Loading weights:  79%|███████▉  | 116/146 [00:01<00:00, 109.93it/s]Loading weights:  88%|████████▊ | 128/146 [00:01<00:00, 76.85it/s] Loading weights: 100%|██████████| 146/146 [00:01<00:00, 92.19it/s]
+Loaded gd_01 on mps
+gd/discovery: 0/100 already complete
+gd/discovery: 2/100
+gd/discovery: 4/100
+gd/discovery: 6/100
+gd/discovery: 8/100
+gd/discovery: 10/100
+gd/discovery: 12/100
+gd/discovery: 14/100
+gd/discovery: 16/100
+gd/discovery: 18/100
+gd/discovery: 20/100
+gd/discovery: 22/100
+gd/discovery: 24/100
+gd/discovery: 26/100
+gd/discovery: 28/100
+gd/discovery: 30/100
+gd/discovery: 32/100
+gd/discovery: 34/100
+gd/discovery: 36/100
+gd/discovery: 38/100
+gd/discovery: 40/100
+gd/discovery: 42/100
+gd/discovery: 44/100
+gd/discovery: 46/100
+gd/discovery: 48/100
+gd/discovery: 50/100
+gd/discovery: 52/100
+gd/discovery: 54/100
+gd/discovery: 56/100
+gd/discovery: 58/100
+gd/discovery: 60/100
+gd/discovery: 62/100
+gd/discovery: 64/100
+gd/discovery: 66/100
+gd/discovery: 68/100
+gd/discovery: 70/100
+gd/discovery: 72/100
+gd/discovery: 74/100
+gd/discovery: 76/100
+gd/discovery: 78/100
+gd/discovery: 80/100
+gd/discovery: 82/100
+gd/discovery: 84/100
+gd/discovery: 86/100
+gd/discovery: 88/100
+gd/discovery: 90/100
+gd/discovery: 92/100
+gd/discovery: 94/100
+gd/discovery: 96/100
+gd/discovery: 98/100
+gd/discovery: 100/100
+gd/r_control: 0/100 already complete
+gd/r_control: 2/100
+gd/r_control: 4/100
+gd/r_control: 6/100
+gd/r_control: 8/100
+gd/r_control: 10/100
+gd/r_control: 12/100
+gd/r_control: 14/100
+gd/r_control: 16/100
+gd/r_control: 18/100
+gd/r_control: 20/100
+gd/r_control: 22/100
+gd/r_control: 24/100
+gd/r_control: 26/100
+gd/r_control: 28/100
+gd/r_control: 30/100
+gd/r_control: 32/100
+gd/r_control: 34/100
+gd/r_control: 36/100
+gd/r_control: 38/100
+gd/r_control: 40/100
+gd/r_control: 42/100
+gd/r_control: 44/100
+gd/r_control: 46/100
+gd/r_control: 48/100
+gd/r_control: 50/100
+gd/r_control: 52/100
+gd/r_control: 54/100
+gd/r_control: 56/100
+gd/r_control: 58/100
+gd/r_control: 60/100
+gd/r_control: 62/100
+gd/r_control: 64/100
+gd/r_control: 66/100
+gd/r_control: 68/100
+gd/r_control: 70/100
+gd/r_control: 72/100
+gd/r_control: 74/100
+gd/r_control: 76/100
+gd/r_control: 78/100
+gd/r_control: 80/100
+gd/r_control: 82/100
+gd/r_control: 84/100
+gd/r_control: 86/100
+gd/r_control: 88/100
+gd/r_control: 90/100
+gd/r_control: 92/100
+gd/r_control: 94/100
+gd/r_control: 96/100
+gd/r_control: 98/100
+gd/r_control: 100/100
+gd_01 evaluation complete; run check_gates.py --through P1

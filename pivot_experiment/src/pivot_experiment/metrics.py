@@ -13,7 +13,8 @@ from .config import stable_hash
 from .models import decoder_layers
 
 
-EVALUATOR_VERSION = 2
+EVALUATOR_VERSION = 3
+FROZEN_PROMPT_DATE = "28 Aug 2026"
 
 
 @dataclass(frozen=True)
@@ -28,6 +29,7 @@ def encode_answer(tokenizer, question: str, answer: str) -> EncodedAnswer:
         [{"role": "user", "content": question}],
         tokenize=False,
         add_generation_prompt=True,
+        date_string=FROZEN_PROMPT_DATE,
     )
     prompt_ids = tokenizer(prompt, add_special_tokens=False)["input_ids"]
     full_ids = tokenizer(prompt + answer, add_special_tokens=False)["input_ids"]
@@ -69,11 +71,53 @@ class QEndCapture:
         return torch.stack(self.values, dim=1).contiguous()
 
 
+class QEndPatch:
+    """Replace one decoder block's Q_END output with frozen donor vectors."""
+
+    def __init__(
+        self,
+        layer,
+        q_end_indices: torch.Tensor,
+        donor_values: torch.Tensor,
+    ):
+        self.layer = layer
+        self.q_end_indices = q_end_indices
+        self.donor_values = donor_values
+        self.handle = None
+
+    def _hook(self, _module, _inputs, output):
+        hidden = output[0] if isinstance(output, tuple) else output
+        if self.donor_values.shape != (hidden.shape[0], hidden.shape[-1]):
+            raise ValueError(
+                "Q_END donor shape does not match the receiver batch and hidden size"
+            )
+        rows = torch.arange(hidden.shape[0], device=hidden.device)
+        indices = self.q_end_indices.to(hidden.device)
+        patched = hidden.clone()
+        patched[rows, indices] = self.donor_values.to(
+            device=hidden.device,
+            dtype=hidden.dtype,
+        )
+        if isinstance(output, tuple):
+            return (patched, *output[1:])
+        return patched
+
+    def __enter__(self):
+        self.handle = self.layer.register_forward_hook(self._hook)
+        return self
+
+    def __exit__(self, *_exc):
+        if self.handle is not None:
+            self.handle.remove()
+
+
 def score_encoded_batch(
     model,
     tokenizer,
     encoded: Sequence[EncodedAnswer],
     capture_q_end: bool = False,
+    patch_layer: int | None = None,
+    patch_q_end_values: torch.Tensor | None = None,
 ) -> tuple[list[dict], torch.Tensor | None]:
     if not encoded:
         return [], None
@@ -90,17 +134,34 @@ def score_encoded_batch(
     input_ids = input_ids.to(device)
     attention_mask = attention_mask.to(device)
 
-    capture = QEndCapture(decoder_layers(model), q_end) if capture_q_end else None
+    layers = decoder_layers(model)
+    capture = QEndCapture(layers, q_end) if capture_q_end else None
+    if (patch_layer is None) != (patch_q_end_values is None):
+        raise ValueError("patch_layer and patch_q_end_values must be provided together")
+    if capture_q_end and patch_layer is not None:
+        raise ValueError("Capture and patch are separate audit conditions")
+    patch = (
+        QEndPatch(layers[patch_layer], q_end, patch_q_end_values)
+        if patch_layer is not None and patch_q_end_values is not None
+        else None
+    )
     with torch.inference_mode():
-        if capture is None:
-            output = model(input_ids=input_ids, attention_mask=attention_mask, use_cache=False)
-        else:
+        if capture is not None:
             with capture:
                 output = model(
                     input_ids=input_ids,
                     attention_mask=attention_mask,
                     use_cache=False,
                 )
+        elif patch is not None:
+            with patch:
+                output = model(
+                    input_ids=input_ids,
+                    attention_mask=attention_mask,
+                    use_cache=False,
+                )
+        else:
+            output = model(input_ids=input_ids, attention_mask=attention_mask, use_cache=False)
 
     results: list[dict] = []
     for row_index, item in enumerate(encoded):

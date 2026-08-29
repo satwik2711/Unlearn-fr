@@ -9,7 +9,13 @@ import torch
 from safetensors.torch import save_file
 
 from .config import atomic_json, stable_hash
-from .metrics import EVALUATOR_VERSION, encode_answer, score_answers, score_encoded_batch
+from .metrics import (
+    EVALUATOR_VERSION,
+    FROZEN_PROMPT_DATE,
+    encode_answer,
+    score_answers,
+    score_encoded_batch,
+)
 from .records import append_jsonl, initialize_manifest, read_unique
 
 
@@ -28,6 +34,7 @@ def evaluate_subset(
     model_spec: dict,
     tokenizer_spec: dict,
     adapter_spec: dict | None = None,
+    candidate_id: str | None = None,
     rows: list[dict],
     subset: str,
     output_path: Path,
@@ -39,10 +46,12 @@ def evaluate_subset(
     job_config = {
         "schema_version": 1,
         "evaluator_version": EVALUATOR_VERSION,
+        "frozen_prompt_date": FROZEN_PROMPT_DATE,
         "state": state,
         "model": model_spec,
         "tokenizer": tokenizer_spec,
         "adapter": adapter_spec,
+        "candidate_id": candidate_id,
         "subset": subset,
         "example_ids": [row["example_id"] for row in rows],
         "row_targets_hash": stable_hash(
@@ -136,6 +145,7 @@ def evaluate_subset(
                 "model_revision": model_spec["revision"],
                 "adapter_id": adapter_spec["adapter_id"] if adapter_spec else None,
                 "adapter_hash": adapter_spec["adapter_hash"] if adapter_spec else None,
+                "candidate_id": candidate_id,
                 "subset": subset,
                 "author_id": row["author_id"],
                 "example_id": row["example_id"],

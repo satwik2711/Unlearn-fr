@@ -1,3 +1,14 @@
+# Superseded experiment specification
+
+This IDK-calibrated specification is retained as historical context only. Both
+IDK calibration attempts failed their frozen gate. The active experiment now
+tests differential causal recoverability between behavior-matched `GD` and
+`RETAIN`; its source of truth is `pivot_experiment/plan.md`.
+
+Do not implement or run stages from this document.
+
+---
+
 # Experiment Plan (Pivot): A Causal Audit of Apparent Forgetting
 
 ## MATS 16–20 hour project using OpenUnlearning Llama-3.2-1B TOFU checkpoints

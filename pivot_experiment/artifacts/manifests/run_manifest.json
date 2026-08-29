@@ -31,10 +31,21 @@
       "activation_dtype": "bfloat16",
       "bootstrap_resamples": 5000,
       "generation": false,
+      "prompt_date": "28 Aug 2026",
       "sequence_batch_size": 2
     },
     "gates": {
-      "p0_min_mean_difference": 0.15
+      "p0_min_mean_difference": 0.15,
+      "p1_max_behavior_distance": 0.15,
+      "p1_max_r_control_degradation": 0.2,
+      "p2_min_differential_recovery": 0.1,
+      "p2_min_positive_authors": 4,
+      "p2_self_patch_tolerance": 0.0001,
+      "p3_max_abs_r_control_change": 0.2,
+      "p3_min_differential_recovery": 0.1,
+      "p3_min_positive_authors": 4,
+      "p4_min_differential_recovery": 0.1,
+      "p4_min_positive_authors": 4
     },
     "seed": 42,
     "splits": {
@@ -45,7 +56,7 @@
       "retain_control_authors": 5
     }
   },
-  "experiment_config_hash": "09818a5b8fc8d0870f41cb20033e6990baac4adb75f910c34ce4d1ddbbd2889d",
+  "experiment_config_hash": "d81101cf7e1a6b0da77e1ef9a1131e26dae05cb4dec9e4eed513ad419e1db733",
   "model_metadata": {
     "full": {
       "decoder_layers": 16,
@@ -53,6 +64,38 @@
       "model_type": "llama",
       "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
       "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192",
+      "vocab_size": 128256
+    },
+    "gd_01": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama",
+      "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr1e-05_alpha1_epoch10",
+      "revision": "0b0de150c1f0f0507fcfac87d4aa32543a225e3e",
+      "vocab_size": 128256
+    },
+    "gd_02": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama",
+      "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr1e-05_alpha2_epoch5",
+      "revision": "940728b3791615faa07279b771b73e83c13b0c6c",
+      "vocab_size": 128256
+    },
+    "gd_03": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama",
+      "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr3e-05_alpha1_epoch5",
+      "revision": "d0aab544ee6282168b0532467e0b733fa6afcba5",
+      "vocab_size": 128256
+    },
+    "gd_04": {
+      "decoder_layers": 16,
+      "hidden_size": 2048,
+      "model_type": "llama",
+      "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr3e-05_alpha1_epoch10",
+      "revision": "db3c73d4492b87b098c33dae53aaa0fe7d08d276",
       "vocab_size": 128256
     },
     "retain": {
@@ -64,6 +107,8 @@
       "vocab_size": 128256
     },
     "tokenizer": {
+      "backend_tokenizer_hash": "96ccf965b778e3c6dda54cf8cbcce919f27bcf5f100177e78f9078e973481883",
+      "chat_template_hash": "2732d9da5568668ed22ea202bffb12f0df405439651e1275ba1f521522f92966",
       "chat_template_present": true,
       "class": "TokenizersBackend",
       "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
@@ -81,10 +126,32 @@
       "hidden_size": 2048,
       "model_type": "llama"
     },
+    "gd_candidate_order": [
+      "gd_01",
+      "gd_02",
+      "gd_03",
+      "gd_04"
+    ],
     "models": {
       "full": {
         "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_full",
         "revision": "88e31200b97e4c0c04ae0d2f0b591f427046d192"
+      },
+      "gd_01": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr1e-05_alpha1_epoch10",
+        "revision": "0b0de150c1f0f0507fcfac87d4aa32543a225e3e"
+      },
+      "gd_02": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr1e-05_alpha2_epoch5",
+        "revision": "940728b3791615faa07279b771b73e83c13b0c6c"
+      },
+      "gd_03": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr3e-05_alpha1_epoch5",
+        "revision": "d0aab544ee6282168b0532467e0b733fa6afcba5"
+      },
+      "gd_04": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr3e-05_alpha1_epoch10",
+        "revision": "db3c73d4492b87b098c33dae53aaa0fe7d08d276"
       },
       "retain": {
         "repo_id": "open-unlearning/tofu_Llama-3.2-1B-Instruct_retain90",
@@ -93,7 +160,7 @@
     },
     "tokenizer_source": "full"
   },
-  "models_config_hash": "12b09a193143b62b3a036e18df8160bf59d86ed86bf16402cc50fa9c4b09f0c0",
+  "models_config_hash": "02c7e53c615d985ba6dbd6f4b22819d72f8ae4c403a3830f2a6b728de74408a5",
   "packages": {
     "accelerate": "1.7.0",
     "datasets": "3.6.0",

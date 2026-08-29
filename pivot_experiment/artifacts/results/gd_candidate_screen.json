@@ -1,0 +1,288 @@
+{
+  "evaluated_candidates": [
+    {
+      "activation_file_count": 50,
+      "behavior_distance": 1.135999588109553,
+      "candidate_id": "gd_01",
+      "checks": {
+        "behavior_matched": false,
+        "r_control_preserved": false
+      },
+      "eligible": false,
+      "full_r_control": {
+        "mean": -0.1758983954321593,
+        "median": -0.14992019534111023,
+        "q25": -0.2492680698633194,
+        "q75": -0.09171288646757603,
+        "std": 0.11159631595844523
+      },
+      "gd_correct_perturbed_margin": {
+        "mean": 3.4147331086620687,
+        "median": 3.33237247467041,
+        "q25": 2.349968755245209,
+        "q75": 4.4725274562835695,
+        "std": 1.8446213776458946
+      },
+      "gd_discovery": {
+        "mean": -3.922595458365977,
+        "median": -3.875929355621338,
+        "q25": -4.9363908767700195,
+        "q75": -2.841200292110443,
+        "std": 1.5710486382055295
+      },
+      "gd_minus_retain_author_clustered_ci_95": [
+        -1.3809581637382506,
+        -0.891041012480855
+      ],
+      "gd_minus_retain_author_effects": {
+        "tofu-a184": -1.4003260731697083,
+        "tofu-a185": -0.828069669008255,
+        "tofu-a189": -0.852662761695683,
+        "tofu-a194": -1.505199235677719,
+        "tofu-a199": -1.093740200996399
+      },
+      "gd_r_control": {
+        "mean": -0.8332122100051492,
+        "median": -0.6750743389129639,
+        "q25": -1.0891758501529694,
+        "q75": -0.42477865517139435,
+        "std": 0.5561861758215263
+      },
+      "input_hash": "ae8a0e1e3af399ec1d1105694ddfed17e5f1e5ee55c5af1592b9c1e7b934b2c5",
+      "model": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr1e-05_alpha1_epoch10",
+        "revision": "0b0de150c1f0f0507fcfac87d4aa32543a225e3e"
+      },
+      "r_control_degradation": 0.65731381457299,
+      "retain_correct_perturbed_margin": {
+        "mean": 1.093516542553902,
+        "median": 1.2070069909095764,
+        "q25": 0.5632176399230957,
+        "q75": 1.6351929903030396,
+        "std": 0.8757234051796872
+      },
+      "retain_discovery": {
+        "mean": -2.786595870256424,
+        "median": -2.855478286743164,
+        "q25": -3.3837697505950928,
+        "q75": -2.1890388131141663,
+        "std": 0.7485613870314869
+      }
+    },
+    {
+      "activation_file_count": 50,
+      "behavior_distance": 1.4674757631088142,
+      "candidate_id": "gd_02",
+      "checks": {
+        "behavior_matched": false,
+        "r_control_preserved": true
+      },
+      "eligible": false,
+      "full_r_control": {
+        "mean": -0.1758983954321593,
+        "median": -0.14992019534111023,
+        "q25": -0.2492680698633194,
+        "q75": -0.09171288646757603,
+        "std": 0.11159631595844523
+      },
+      "gd_correct_perturbed_margin": {
+        "mean": 4.012574008491123,
+        "median": 3.9133425474166867,
+        "q25": 3.398743557929993,
+        "q75": 4.884236735105515,
+        "std": 1.281239491025373
+      },
+      "gd_discovery": {
+        "mean": -1.3191201071476097,
+        "median": -1.1209481954574585,
+        "q25": -1.7499276101589203,
+        "q75": -0.6800982356071472,
+        "std": 0.8897219817322549
+      },
+      "gd_minus_retain_author_clustered_ci_95": [
+        1.35448862522142,
+        1.624330288913334
+      ],
+      "gd_minus_retain_author_effects": {
+        "tofu-a184": 1.4839701667428016,
+        "tofu-a185": 1.771725209057331,
+        "tofu-a189": 1.322505650651874,
+        "tofu-a194": 1.3909237533807755,
+        "tofu-a199": 1.3682540357112885
+      },
+      "gd_r_control": {
+        "mean": -0.2636215083952993,
+        "median": -0.20883043855428696,
+        "q25": -0.34019259363412857,
+        "q75": -0.10710110701620579,
+        "std": 0.21451028550007833
+      },
+      "input_hash": "940f342e7456d92d2a1c01332e9a32ef076296af01a92103a58b1df0f6bbc1bf",
+      "model": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr1e-05_alpha2_epoch5",
+        "revision": "940728b3791615faa07279b771b73e83c13b0c6c"
+      },
+      "r_control_degradation": 0.08772311296314,
+      "retain_correct_perturbed_margin": {
+        "mean": 1.093516542553902,
+        "median": 1.2070069909095764,
+        "q25": 0.5632176399230957,
+        "q75": 1.6351929903030396,
+        "std": 0.8757234051796872
+      },
+      "retain_discovery": {
+        "mean": -2.786595870256424,
+        "median": -2.855478286743164,
+        "q25": -3.3837697505950928,
+        "q75": -2.1890388131141663,
+        "std": 0.7485613870314869
+      }
+    },
+    {
+      "activation_file_count": 50,
+      "behavior_distance": 93.93687222361565,
+      "candidate_id": "gd_03",
+      "checks": {
+        "behavior_matched": false,
+        "r_control_preserved": false
+      },
+      "eligible": false,
+      "full_r_control": {
+        "mean": -0.1758983954321593,
+        "median": -0.14992019534111023,
+        "q25": -0.2492680698633194,
+        "q75": -0.09171288646757603,
+        "std": 0.11159631595844523
+      },
+      "gd_correct_perturbed_margin": {
+        "mean": -0.39693223428726154,
+        "median": -0.008716583251953125,
+        "q25": -0.47438354492187784,
+        "q75": 0.47460098266601847,
+        "std": 5.503976859447833
+      },
+      "gd_discovery": {
+        "mean": -96.72346809387207,
+        "median": -97.38422012329102,
+        "q25": -97.73371124267578,
+        "q75": -96.7244644165039,
+        "std": 4.088669204559439
+      },
+      "gd_minus_retain_author_clustered_ci_95": [
+        -94.74932542204856,
+        -93.16191202163697
+      ],
+      "gd_minus_retain_author_effects": {
+        "tofu-a184": -94.58840378522873,
+        "tofu-a185": -93.70086673498153,
+        "tofu-a189": -95.34074391126633,
+        "tofu-a194": -93.13599159121513,
+        "tofu-a199": -92.9183550953865
+      },
+      "gd_r_control": {
+        "mean": -1.8643768271803856,
+        "median": -0.9234996438026428,
+        "q25": -1.1409112811088562,
+        "q75": -0.7434787154197693,
+        "std": 9.221492470585392
+      },
+      "input_hash": "0f10946f1cb65b3d48a08b3f433b20f661758877e7ad313da7517c091eabaefc",
+      "model": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr3e-05_alpha1_epoch5",
+        "revision": "d0aab544ee6282168b0532467e0b733fa6afcba5"
+      },
+      "r_control_degradation": 1.6884784317482262,
+      "retain_correct_perturbed_margin": {
+        "mean": 1.093516542553902,
+        "median": 1.2070069909095764,
+        "q25": 0.5632176399230957,
+        "q75": 1.6351929903030396,
+        "std": 0.8757234051796872
+      },
+      "retain_discovery": {
+        "mean": -2.786595870256424,
+        "median": -2.855478286743164,
+        "q25": -3.3837697505950928,
+        "q75": -2.1890388131141663,
+        "std": 0.7485613870314869
+      }
+    },
+    {
+      "activation_file_count": 50,
+      "behavior_distance": 96.5063173377514,
+      "candidate_id": "gd_04",
+      "checks": {
+        "behavior_matched": false,
+        "r_control_preserved": false
+      },
+      "eligible": false,
+      "full_r_control": {
+        "mean": -0.1758983954321593,
+        "median": -0.14992019534111023,
+        "q25": -0.2492680698633194,
+        "q75": -0.09171288646757603,
+        "std": 0.11159631595844523
+      },
+      "gd_correct_perturbed_margin": {
+        "mean": -0.18493375396728468,
+        "median": -0.11988677978515483,
+        "q25": -0.41573677062988423,
+        "q75": 0.4411514282226534,
+        "std": 2.8866907795037857
+      },
+      "gd_discovery": {
+        "mean": -99.29291320800782,
+        "median": -99.54951095581055,
+        "q25": -99.78204727172852,
+        "q75": -98.99394989013672,
+        "std": 0.8591816754386689
+      },
+      "gd_minus_retain_author_clustered_ci_95": [
+        -97.10190472841263,
+        -95.75033696770669
+      ],
+      "gd_minus_retain_author_effects": {
+        "tofu-a184": -96.93027275800705,
+        "tofu-a185": -96.12825626134872,
+        "tofu-a189": -97.40697239637375,
+        "tofu-a194": -95.23105193972587,
+        "tofu-a199": -96.83503333330154
+      },
+      "gd_r_control": {
+        "mean": -0.7693812151998282,
+        "median": -0.7005486488342285,
+        "q25": -0.9125826060771942,
+        "q75": -0.5553983598947525,
+        "std": 0.3760697360762469
+      },
+      "input_hash": "ce0f50fd5ed94b22f237f55567251487577c29d99107690657072eb00004ca9f",
+      "model": {
+        "repo_id": "open-unlearning/unlearn_tofu_Llama-3.2-1B-Instruct_forget10_GradDiff_lr3e-05_alpha1_epoch10",
+        "revision": "db3c73d4492b87b098c33dae53aaa0fe7d08d276"
+      },
+      "r_control_degradation": 0.5934828197676689,
+      "retain_correct_perturbed_margin": {
+        "mean": 1.093516542553902,
+        "median": 1.2070069909095764,
+        "q25": 0.5632176399230957,
+        "q75": 1.6351929903030396,
+        "std": 0.8757234051796872
+      },
+      "retain_discovery": {
+        "mean": -2.786595870256424,
+        "median": -2.855478286743164,
+        "q25": -3.3837697505950928,
+        "q75": -2.1890388131141663,
+        "std": 0.7485613870314869
+      }
+    }
+  ],
+  "gate": "P1",
+  "reason": "No frozen GD candidate met behavior-match and utility gates",
+  "schema_version": 1,
+  "status": "FAIL",
+  "thresholds": {
+    "max_behavior_distance": 0.15,
+    "max_r_control_degradation": 0.2
+  }
+}
