@@ -1,0 +1,18 @@
+{
+  "completed_rows": 1600,
+  "config": {
+    "effect_definition": "patched_minus_same_runtime_idk",
+    "final_states_hash": "0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c",
+    "headroom_definition": "same_runtime_full_minus_same_runtime_idk",
+    "runtime_baseline_manifest_hash": "f743a10fe2d1bba9d8eb4529a2cb669fa446d7850a1871f07f40c65d19882956",
+    "runtime_baseline_rows_hash": "5f34205f758000d6bb70aacdc3fd880f9b358d307ea27bfc74d63802486ef8ba",
+    "schema_version": 1,
+    "source_sweep_manifest_hash": "5d797615e2e0fc843c63c2520875a4909ec8403303ac1b16f4437573e5726390",
+    "source_sweep_rows_hash": "7222aaac4703f61d51ddca9c59244433d7a0b1d1df3d572755e6b61388e21f8d",
+    "status": "derived_without_model_run"
+  },
+  "config_hash": "a6a6064759736f4b9a96bc66ea0c000a5c3b762bba56241d5c66ea74c4d3b383",
+  "expected_rows": 1600,
+  "schema_version": 1,
+  "status": "complete"
+}

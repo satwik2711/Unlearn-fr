@@ -40,6 +40,10 @@ def release_model(model) -> None:
 
 
 def main() -> None:
+    raise SystemExit(
+        "This GD-selected-layer script is obsolete under the final plan. "
+        "Use run_idk_localization.py for Chunk 2."
+    )
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_EXPERIMENT_CONFIG)
     parser.add_argument("--models-config", type=Path, default=DEFAULT_MODELS_CONFIG)

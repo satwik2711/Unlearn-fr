@@ -84,10 +84,12 @@ recovery.
 
 The tokenizer always comes from pinned `FULL`. All states use the same rendered
 prompt, frozen prompt date `28 Aug 2026`, answer boundary and token IDs. The
-archived IDK manifest says evaluator v1 while active artifacts say v3, but all
-100 IDK, archived-FULL and active-FULL prompt hashes match exactly, and the
-scoring implementation is unchanged; Stage A must record that compatibility
-audit rather than pretending the manifest version labels are identical.
+archived records remain the frozen behavioral description and provenance
+check. Intervention effects, however, must be differenced against a baseline
+scored in the same software/device runtime as the intervention job. This avoids
+mixing small MPS/BF16 cross-run drift into a causal effect. Stage A records the
+archived compatibility audit rather than pretending the evaluator-version
+labels are identical.
 
 ## 4. Frozen data boundaries
 
@@ -216,8 +218,12 @@ $$
 h_l^{IDK}(q,Q_{END})\leftarrow h_l^{FULL}(q,Q_{END}).
 $$
 
-Reuse stored unpatched FULL and IDK scores. Do not generate text during the
-16-layer sweep. Store all 1,600 patched scores incrementally.
+Before intervention scoring, run one unpatched pass over discovery with the IDK
+adapter off (`FULL`) and on (`IDK`) in the intervention runtime. Do not generate
+text during the 16-layer sweep. Store all 1,600 patched scores incrementally.
+Store raw patched log-probabilities separately from the derived recovery table,
+so completed patched forwards can be mechanically rebased if an interrupted
+job reveals a baseline-provenance problem.
 
 Calculate raw and author-level normalized recovery, then freeze:
 
@@ -233,7 +239,9 @@ engineering check only.
 
 Outputs:
 
+- `artifacts/scores/idk_runtime_baselines.jsonl`;
 - `artifacts/interventions/idk_layer_sweep.jsonl`;
+- `artifacts/interventions/idk_layer_sweep_rebased.jsonl`;
 - `artifacts/freeze/causal_layer.json`.
 
 ## 10. Stage C — direct patch-transfer readout
@@ -415,8 +423,9 @@ retuning on confirmation authors.
 
 | Existing or new artifact | Reused for |
 |---|---|
-| existing FULL scores and all-layer discovery cache | all patch donors, denominators and direction |
-| archived IDK step-000025 scores/cache/checkpoint | layer localization, direction and steering |
+| existing FULL scores and all-layer discovery cache | all patch donors, archived behavior and direction |
+| archived IDK step-000025 scores/cache/checkpoint | archived behavior, layer localization, direction and steering |
+| one same-runtime FULL/IDK discovery baseline pass | IDK patch-effect and headroom denominators |
 | existing GD02 scores/cache | baseline and descriptive analysis; cache is not used to construct the direction |
 | existing RETAIN scores | baselines and denominators |
 | 1,600 IDK patch cells | layer localization only |
@@ -427,9 +436,9 @@ retuning on confirmation authors.
 | one FULL confirmation baseline pass | all held-out fractional-recovery denominators |
 | one grouped confirmation run per intervention receiver | learned and random held-out endpoints |
 
-Never rerun FULL, IDK, GD02 or RETAIN baselines when compatible stored records
-exist. Never regenerate discovery activations already present. Audit code never
-loads a model.
+Never rerun a same-runtime baseline when its manifest matches the intervention
+job. Never regenerate discovery activations or raw patched scores already
+present. Audit code never loads a model.
 
 ## 16. Implementation chunks
 
@@ -440,8 +449,10 @@ old negative reports, and emit `final_states.json`. No model run.
 
 ### Chunk 2 — IDK layer localization
 
-Implement and manually run the 16-layer IDK patch sweep. Freeze $l^*$ from IDK
-only and run the small self-patch engineering audit.
+Implement and manually run one FULL/IDK runtime-baseline pass and the 16-layer
+IDK patch sweep. Freeze $l^*$ from IDK only and run the small live-activation
+self-patch engineering audit. Archived/current activation drift is reported as
+a diagnostic, not treated as hook failure.
 
 ### Chunk 3 — GD02/RETAIN patch transfer
 
@@ -465,6 +476,10 @@ Generate layer curves, author-level normalized/raw recovery tables, steering
 plots, random-control comparisons, generation diagnostics and a claim-bounded
 positive, null or contrary report. No model is loaded.
 
-Chunk 1 is complete. The next action is **Chunk 2 only**: implement the IDK-only
-layer sweep and causal-layer freeze. Do not run the currently implemented
-GD02/RETAIN P2 command until it has been reconciled with this final plan.
+Chunk 1 is complete. Chunk 2's 1,600 raw intervention scores are complete; its
+initial derived freeze was invalidated because those scores were differenced
+against an archived runtime. Resume the same command to score 200 same-runtime
+FULL/IDK baselines, mechanically rebase the completed sweep, refreeze the
+layer, and run four live self-patch audit rows. Do not run the obsolete
+GD02/RETAIN P2 command; Chunk 3 will replace it with the frozen-layer transfer
+implementation after Chunk 2 finishes.

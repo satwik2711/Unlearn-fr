@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "superseded_before_confirmation",
+  "reason": "The first Chunk 2 analysis subtracted archived baselines from current-runtime patched scores. A four-row audit detected cross-run MPS/BF16 numerical drift, so effects must be rebased to same-runtime FULL and IDK baselines.",
+  "patched_score_cells_preserved": 1600,
+  "patched_scores_require_rerun": false,
+  "superseded_selected_layer": 14,
+  "superseded_mean_fractional_recovery": 0.7070116106838836,
+  "superseded_mean_raw_recovery": 0.08531225021928548,
+  "superseded_positive_authors": 5,
+  "superseded_freeze_hash": "b67ae01baacc50dd1198fe1f9b31f6b2e074d82e132b964e2a612bd9c78e2afe",
+  "observed_max_abs_archived_activation_delta": 0.03125,
+  "observed_max_abs_archived_baseline_delta": 0.00632120668888092,
+  "observed_max_abs_archived_self_patch_effect": 0.0029536187648773193,
+  "repair": "Score FULL-off and IDK-on once in the current runtime, derive a rebased sweep without model forwards, refreeze the layer, and audit the hook with live same-run self activations.",
+  "confirmation_was_opened": false
+}

@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""Model-free completion audit for the final non-gating experiment."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
+
+from pivot_experiment.config import DEFAULT_ARTIFACT_ROOT  # noqa: E402
+from pivot_experiment.idk_localization import audit_chunk2, load_final_freeze  # noqa: E402
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--through", choices=("A", "B"), default="B")
+    parser.add_argument("--artifacts", type=Path, default=DEFAULT_ARTIFACT_ROOT)
+    args = parser.parse_args()
+
+    final_states = load_final_freeze(args.artifacts / "freeze" / "final_states.json")
+    print("Stage  Status      Result")
+    print(
+        "A      COMPLETE    "
+        f"IDK={final_states['states']['idk']['adapter_id']}, "
+        f"GD={final_states['states']['gd02']['candidate_id']}"
+    )
+    if args.through == "A":
+        return
+    stage = audit_chunk2(artifact_root=args.artifacts, final_states=final_states)
+    if stage["status"] == "INCOMPLETE":
+        print(f"B      INCOMPLETE  {stage['reason']}")
+        raise SystemExit(2)
+    low, high = stage["fractional_author_clustered_ci_95"]
+    print(
+        "B      COMPLETE    "
+        f"layer={stage['selected_layer']}, "
+        f"RF={stage['mean_fractional_recovery']:+.4f}, "
+        f"raw={stage['mean_raw_recovery']:+.4f}, "
+        f"authors={stage['positive_authors']}/5, "
+        f"RF_CI=[{low:+.4f}, {high:+.4f}]"
+    )
+    print(f"Self-patch max |delta|={stage['max_abs_self_patch_effect']:.6g}")
+    print(
+        "Current/runtime-baseline max |delta|="
+        f"{stage['max_abs_runtime_baseline_delta']:.6g}"
+    )
+    if not stage["live_self_patch_within_tolerance"]:
+        print("Warning: live self-patch exceeded the diagnostic tolerance")
+    print(
+        "Archived/current activation drift (diagnostic): "
+        f"{stage['max_abs_archived_activation_delta']:.6g}"
+    )
+
+
+if __name__ == "__main__":
+    main()

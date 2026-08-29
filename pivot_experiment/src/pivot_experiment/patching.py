@@ -16,10 +16,17 @@ from .records import append_jsonl, initialize_manifest, read_jsonl, read_unique
 class ActivationStore:
     """Lazy, validated reader for evaluator activation sidecars."""
 
-    def __init__(self, rows: dict[str, dict], layers: int, hidden_size: int):
+    def __init__(
+        self,
+        rows: dict[str, dict],
+        layers: int,
+        hidden_size: int,
+        activation_directory: Path | None = None,
+    ):
         self.rows = rows
         self.layers = layers
         self.hidden_size = hidden_size
+        self.activation_directory = activation_directory
         self._cache: dict[str, torch.Tensor] = {}
 
     def vector(self, example_id: str, layer: int) -> torch.Tensor:
@@ -28,8 +35,13 @@ class ActivationStore:
         row_index = row.get("activation_row")
         if path is None or row_index is None:
             raise ValueError(f"Missing activation reference for {example_id}")
-        if path not in self._cache:
-            activation_path = Path(path)
+        cache_key = path
+        if cache_key not in self._cache:
+            activation_path = (
+                self.activation_directory / Path(path).name
+                if self.activation_directory is not None
+                else Path(path)
+            )
             if not activation_path.exists():
                 raise FileNotFoundError(f"Missing activation sidecar: {activation_path}")
             tensor = load_file(activation_path, device="cpu")["q_end"]
@@ -40,8 +52,8 @@ class ActivationStore:
                 raise ValueError(
                     f"Invalid activation shape {tuple(tensor.shape)} in {activation_path}"
                 )
-            self._cache[path] = tensor
-        return self._cache[path][row_index, layer].clone()
+            self._cache[cache_key] = tensor
+        return self._cache[cache_key][row_index, layer].clone()
 
     def validate_all(self, example_ids: list[str]) -> None:
         for example_id in example_ids:

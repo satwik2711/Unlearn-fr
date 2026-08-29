@@ -7,11 +7,10 @@
     "token_position": "Q_END"
   },
   "confirmation": {
-    "inspected_jsonl_count": 12,
-    "inspected_paths_hash": "4c5bc4064830e8e0e5aaaa4fb6dcb8a0b79213ab3277430d56081d8e19c6ab61",
+    "scored_confirmation_rows": 0,
     "status": "sealed"
   },
-  "freeze_hash": "54f4d4eb767e221e14afdb303b1bb8f403b13315a3153ee8a015bc09d4e56959",
+  "freeze_hash": "0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c",
   "historical_negative_reports": {
     "gd_candidate_screen": {
       "path": "artifacts/results/gd_candidate_screen.json",

@@ -46,11 +46,44 @@ Frozen result:
 - mean IDK headroom: `0.1198518` nats/token, positive for 100/100 examples;
 - confirmation: sealed;
 - freeze hash:
-  `54f4d4eb767e221e14afdb303b1bb8f403b13315a3153ee8a015bc09d4e56959`.
+  `0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c`.
 
-The earlier GD-selected-layer patching script remains obsolete and must not be
-run. The next implementation step is Chunk 2: the IDK-only 16-layer patch sweep
-and causal-layer freeze.
+## Chunk 2 — IDK-only layer localization
+
+Validate the frozen workload without loading a tokenizer or model:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/run_idk_localization.py --dry-run
+```
+
+Run the authoritative, resumable job manually:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_idk_localization.py \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/idk_localization.log
+```
+
+The job loads FULL plus IDK `step-000025` once, records same-runtime FULL/IDK
+baselines, evaluates 100 discovery questions at all 16 layers, freezes `l*`
+from IDK author-level fractional recovery only, and runs a four-author live
+self-patch engineering audit. It does not read GD02 during selection and does
+not open confirmation.
+
+The 1,600 raw patch scores are already complete. Resuming after the archived-
+baseline provenance failure will skip them: it adds only 200 baseline scores,
+mechanically rebases the sweep, refreezes `l*`, and evaluates four audit rows.
+Archived/current activation drift is retained as a diagnostic and is not used
+as a hook-correctness test.
+
+After it finishes, run the model-free completion audit:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/check_stages.py --through B
+```
+
+The earlier `run_exact_patching.py` entry point is disabled because it implements
+the superseded GD-selected-layer design.
 
 Runnable commands will be added here only after each new chunk is implemented
 and validated.

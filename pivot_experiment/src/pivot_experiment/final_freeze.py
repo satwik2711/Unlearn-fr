@@ -187,20 +187,20 @@ def validate_activations(
 
 
 def assert_confirmation_unopened(artifact_root: Path) -> dict[str, Any]:
-    inspected = []
+    confirmation_rows = 0
     for directory_name in ("scores", "interventions"):
         directory = artifact_root / directory_name
         if not directory.exists():
             continue
         for path in sorted(directory.rglob("*.jsonl")):
             rows = read_jsonl(path)
-            inspected.append(portable_path(path))
-            if any(row.get("subset") == "confirmation" for row in rows):
+            found = sum(row.get("subset") == "confirmation" for row in rows)
+            confirmation_rows += found
+            if found:
                 raise ValueError(f"Confirmation has already been scored in {path}")
     return {
         "status": "sealed",
-        "inspected_jsonl_count": len(inspected),
-        "inspected_paths_hash": stable_hash(inspected),
+        "scored_confirmation_rows": confirmation_rows,
     }
 
 
