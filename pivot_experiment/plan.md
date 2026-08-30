@@ -405,6 +405,13 @@ specificity comparison, not a precise tail probability.
 Store greedy generations for FULL, receiver baselines and learned-direction
 conditions only. Random-direction conditions remain likelihood-only.
 
+Because the original confirmation freeze named the generation conditions but
+did not encode decoding parameters, write a pre-confirmation engineering
+supplement bound to that immutable freeze before reading held-out rows. It
+locks greedy decoding (`do_sample=false`, one beam), 64 new tokens, generation
+batch size 2 and cached decoding. This supplement cannot alter the layer,
+direction, alpha, states, seeds or endpoints.
+
 ## 14. Interpretation
 
 If IDK recovery is positive and the learned direction exceeds the random
@@ -487,10 +494,6 @@ Generate layer curves, author-level normalized/raw recovery tables, steering
 plots, random-control comparisons, generation diagnostics and a claim-bounded
 positive, null or contrary report. No model is loaded.
 
-Chunk 1 is complete. Chunk 2's 1,600 raw intervention scores are complete; its
-initial derived freeze was invalidated because those scores were differenced
-against an archived runtime. Resume the same command to score 200 same-runtime
-FULL/IDK baselines, mechanically rebase the completed sweep, refreeze the
-layer, and run four live self-patch audit rows. Do not run the obsolete
-GD02/RETAIN P2 command; Chunk 3 will replace it with the frozen-layer transfer
-implementation after Chunk 2 finishes.
+Chunks 1–5 are complete. Chunk 6 is a deterministic, model-free derivation
+from the frozen artifacts and must preserve the contrary held-out result
+without retuning or exploratory claim expansion.

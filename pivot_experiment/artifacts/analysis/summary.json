@@ -1,0 +1,16 @@
+{
+  "analysis_version": 1,
+  "claim": "No shared differential causal recovery was detected; the frozen learned direction reduced GD02 target evidence more than RETAIN target evidence.",
+  "confirmation_transfer": -0.5999923533211877,
+  "gd02_confirmation_rf": -0.6938675186864852,
+  "idk_confirmation_rf": 0.6143706568661857,
+  "idk_rank_among_six": 1,
+  "no_model_loaded": true,
+  "outcome": "contrary_negative_transfer",
+  "retain_confirmation_rf": -0.09387516536529757,
+  "schema_version": 1,
+  "selected_alpha": 1.0,
+  "selected_layer": 14,
+  "status": "COMPLETE",
+  "transfer_rank_among_six": 6
+}

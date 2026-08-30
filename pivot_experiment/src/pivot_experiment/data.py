@@ -184,6 +184,12 @@ def load_prepared_rows(artifact_root: Path, subset: str) -> list[dict]:
             for row in read_jsonl(artifact_root / "data" / "retain90.jsonl")
             if row["partition"] == "r_control"
         ]
+    if subset == "confirmation":
+        return [
+            row
+            for row in read_jsonl(artifact_root / "data" / "forget10.jsonl")
+            if row["partition"] == "confirmation"
+        ]
     raise ValueError(f"Unknown prepared subset: {subset}")
 
 

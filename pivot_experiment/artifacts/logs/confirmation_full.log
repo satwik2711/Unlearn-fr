@@ -1,0 +1,108 @@
+Chunk 5 full: scores=100, generations=100, phase=all
+Frozen layer=14, alpha=1.0, random_controls=5
+Loading weights:   0%|          | 0/146 [00:00<?, ?it/s]Loading weights:  10%|█         | 15/146 [00:00<00:00, 134.81it/s]Loading weights:  27%|██▋       | 40/146 [00:00<00:00, 173.48it/s]Loading weights:  40%|████      | 59/146 [00:00<00:00, 177.93it/s]Loading weights:  55%|█████▌    | 81/146 [00:00<00:00, 183.44it/s]Loading weights:  73%|███████▎  | 106/146 [00:00<00:00, 192.12it/s]Loading weights:  86%|████████▋ | 126/146 [00:00<00:00, 133.39it/s]Loading weights: 100%|██████████| 146/146 [00:00<00:00, 164.19it/s]
+Loaded full on mps
+full/confirmation_scores: 0/100 already complete
+full/confirmation_scores: 2/100
+full/confirmation_scores: 4/100
+full/confirmation_scores: 6/100
+full/confirmation_scores: 8/100
+full/confirmation_scores: 10/100
+full/confirmation_scores: 12/100
+full/confirmation_scores: 14/100
+full/confirmation_scores: 16/100
+full/confirmation_scores: 18/100
+full/confirmation_scores: 20/100
+full/confirmation_scores: 22/100
+full/confirmation_scores: 24/100
+full/confirmation_scores: 26/100
+full/confirmation_scores: 28/100
+full/confirmation_scores: 30/100
+full/confirmation_scores: 32/100
+full/confirmation_scores: 34/100
+full/confirmation_scores: 36/100
+full/confirmation_scores: 38/100
+full/confirmation_scores: 40/100
+full/confirmation_scores: 42/100
+full/confirmation_scores: 44/100
+full/confirmation_scores: 46/100
+full/confirmation_scores: 48/100
+full/confirmation_scores: 50/100
+full/confirmation_scores: 52/100
+full/confirmation_scores: 54/100
+full/confirmation_scores: 56/100
+full/confirmation_scores: 58/100
+full/confirmation_scores: 60/100
+full/confirmation_scores: 62/100
+full/confirmation_scores: 64/100
+full/confirmation_scores: 66/100
+full/confirmation_scores: 68/100
+full/confirmation_scores: 70/100
+full/confirmation_scores: 72/100
+full/confirmation_scores: 74/100
+full/confirmation_scores: 76/100
+full/confirmation_scores: 78/100
+full/confirmation_scores: 80/100
+full/confirmation_scores: 82/100
+full/confirmation_scores: 84/100
+full/confirmation_scores: 86/100
+full/confirmation_scores: 88/100
+full/confirmation_scores: 90/100
+full/confirmation_scores: 92/100
+full/confirmation_scores: 94/100
+full/confirmation_scores: 96/100
+full/confirmation_scores: 98/100
+full/confirmation_scores: 100/100
+full/confirmation_generations: 0/100 already complete
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+full/confirmation_generations: 2/100
+full/confirmation_generations: 4/100
+full/confirmation_generations: 6/100
+full/confirmation_generations: 8/100
+full/confirmation_generations: 10/100
+full/confirmation_generations: 12/100
+full/confirmation_generations: 14/100
+full/confirmation_generations: 16/100
+full/confirmation_generations: 18/100
+full/confirmation_generations: 20/100
+full/confirmation_generations: 22/100
+full/confirmation_generations: 24/100
+full/confirmation_generations: 26/100
+full/confirmation_generations: 28/100
+full/confirmation_generations: 30/100
+full/confirmation_generations: 32/100
+full/confirmation_generations: 34/100
+full/confirmation_generations: 36/100
+full/confirmation_generations: 38/100
+full/confirmation_generations: 40/100
+full/confirmation_generations: 42/100
+full/confirmation_generations: 44/100
+full/confirmation_generations: 46/100
+full/confirmation_generations: 48/100
+full/confirmation_generations: 50/100
+full/confirmation_generations: 52/100
+full/confirmation_generations: 54/100
+full/confirmation_generations: 56/100
+full/confirmation_generations: 58/100
+full/confirmation_generations: 60/100
+full/confirmation_generations: 62/100
+full/confirmation_generations: 64/100
+full/confirmation_generations: 66/100
+full/confirmation_generations: 68/100
+full/confirmation_generations: 70/100
+full/confirmation_generations: 72/100
+full/confirmation_generations: 74/100
+full/confirmation_generations: 76/100
+full/confirmation_generations: 78/100
+full/confirmation_generations: 80/100
+full/confirmation_generations: 82/100
+full/confirmation_generations: 84/100
+full/confirmation_generations: 86/100
+full/confirmation_generations: 88/100
+full/confirmation_generations: 90/100
+full/confirmation_generations: 92/100
+full/confirmation_generations: 94/100
+full/confirmation_generations: 96/100
+full/confirmation_generations: 98/100
+full/confirmation_generations: 100/100
+Chunk 5 full phase=all complete

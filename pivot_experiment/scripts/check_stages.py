@@ -11,17 +11,23 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from pivot_experiment.config import DEFAULT_ARTIFACT_ROOT  # noqa: E402
+from pivot_experiment.analysis import audit_chunk6  # noqa: E402
+from pivot_experiment.confirmation import (  # noqa: E402
+    audit_chunk5,
+    load_confirmation_freeze,
+    load_confirmation_protocol,
+)
 from pivot_experiment.idk_localization import audit_chunk2, load_final_freeze  # noqa: E402
 from pivot_experiment.patch_transfer import (  # noqa: E402
     audit_chunk3,
     load_causal_layer,
 )
-from pivot_experiment.steering import audit_chunk4  # noqa: E402
+from pivot_experiment.steering import audit_chunk4, load_direction  # noqa: E402
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--through", choices=("A", "B", "C", "D"), default="D")
+    parser.add_argument("--through", choices=("A", "B", "C", "D", "E", "F"), default="F")
     parser.add_argument("--artifacts", type=Path, default=DEFAULT_ARTIFACT_ROOT)
     args = parser.parse_args()
 
@@ -99,6 +105,53 @@ def main() -> None:
         f"IDK_RF={steering['selected_idk_rf']:+.4f}, "
         f"RETAIN_RF={steering['selected_retain_rf']:+.4f}, "
         f"utility={steering['selected_utility_penalty']:.4f}"
+    )
+    if args.through == "D":
+        return
+    confirmation_freeze = load_confirmation_freeze(
+        args.artifacts / "freeze" / "confirmation.json"
+    )
+    direction_path = args.artifacts / "directions" / "full_minus_idk.safetensors"
+    _, direction_manifest = load_direction(
+        direction_path,
+        direction_path.with_suffix(".manifest.json"),
+        final_states,
+        causal_layer,
+    )
+    _, _, execution = load_confirmation_protocol(
+        confirmation_freeze=confirmation_freeze,
+        direction_manifest=direction_manifest,
+        random_tensor_path=args.artifacts / "directions" / "confirmation_random.safetensors",
+        random_manifest_path=args.artifacts / "directions" / "confirmation_random.manifest.json",
+        execution_freeze_path=args.artifacts / "freeze" / "confirmation_execution.json",
+    )
+    confirmation = audit_chunk5(
+        artifact_root=args.artifacts,
+        final_states=final_states,
+        confirmation_freeze=confirmation_freeze,
+        execution=execution,
+    )
+    if confirmation["status"] == "INCOMPLETE":
+        print(f"E      INCOMPLETE  {confirmation['reason']}")
+        raise SystemExit(2)
+    print(
+        "E      COMPLETE    "
+        f"C_IDK={confirmation['c_idk']:+.4f} "
+        f"(rank={confirmation['idk_learned_rank_among_six']}/6), "
+        f"C_transfer={confirmation['c_transfer']:+.4f} "
+        f"(rank={confirmation['transfer_learned_rank_among_six']}/6)"
+    )
+    if args.through == "E":
+        return
+    analysis = audit_chunk6(args.artifacts / "analysis")
+    if analysis["status"] == "INCOMPLETE":
+        print(f"F      INCOMPLETE  {analysis['reason']}")
+        raise SystemExit(2)
+    print(
+        "F      COMPLETE    "
+        f"outcome={analysis['outcome']}, "
+        f"C_IDK={analysis['c_idk']:+.4f}, "
+        f"C_transfer={analysis['c_transfer']:+.4f}"
     )
 
 

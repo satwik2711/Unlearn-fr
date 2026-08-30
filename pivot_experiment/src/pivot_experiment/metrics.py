@@ -24,7 +24,7 @@ class EncodedAnswer:
     prompt_hash: str
 
 
-def encode_answer(tokenizer, question: str, answer: str) -> EncodedAnswer:
+def render_question_prompt(tokenizer, question: str) -> tuple[str, list[int], str]:
     prompt = tokenizer.apply_chat_template(
         [{"role": "user", "content": question}],
         tokenize=False,
@@ -32,6 +32,11 @@ def encode_answer(tokenizer, question: str, answer: str) -> EncodedAnswer:
         date_string=FROZEN_PROMPT_DATE,
     )
     prompt_ids = tokenizer(prompt, add_special_tokens=False)["input_ids"]
+    return prompt, prompt_ids, stable_hash({"prompt": prompt, "token_ids": prompt_ids})
+
+
+def encode_answer(tokenizer, question: str, answer: str) -> EncodedAnswer:
+    prompt, prompt_ids, prompt_hash = render_question_prompt(tokenizer, question)
     full_ids = tokenizer(prompt + answer, add_special_tokens=False)["input_ids"]
     if full_ids[: len(prompt_ids)] != prompt_ids:
         raise ValueError("Answer concatenation changed the frozen prompt tokenization")
@@ -40,7 +45,7 @@ def encode_answer(tokenizer, question: str, answer: str) -> EncodedAnswer:
     return EncodedAnswer(
         input_ids=torch.tensor(full_ids, dtype=torch.long),
         prompt_length=len(prompt_ids),
-        prompt_hash=stable_hash({"prompt": prompt, "token_ids": prompt_ids}),
+        prompt_hash=prompt_hash,
     )
 
 
@@ -114,15 +119,26 @@ class QEndPatch:
 class QEndSteer:
     """Add a fixed direction to one decoder block's Q_END output."""
 
-    def __init__(self, layer, q_end_indices: torch.Tensor, direction: torch.Tensor, alpha: float):
+    def __init__(
+        self,
+        layer,
+        q_end_indices: torch.Tensor,
+        direction: torch.Tensor,
+        alpha: float,
+        apply_once: bool = False,
+    ):
         self.layer = layer
         self.q_end_indices = q_end_indices
         self.direction = direction
         self.alpha = alpha
+        self.apply_once = apply_once
+        self.applied = False
         self.handle = None
 
     def _hook(self, _module, _inputs, output):
         hidden = output[0] if isinstance(output, tuple) else output
+        if self.apply_once and self.applied:
+            return output
         if self.direction.shape != (hidden.shape[-1],):
             raise ValueError("Steering direction does not match the model hidden size")
         rows = torch.arange(hidden.shape[0], device=hidden.device)
@@ -130,11 +146,13 @@ class QEndSteer:
         steered = hidden.clone()
         direction = self.direction.to(device=hidden.device, dtype=hidden.dtype)
         steered[rows, indices] = steered[rows, indices] + self.alpha * direction
+        self.applied = True
         if isinstance(output, tuple):
             return (steered, *output[1:])
         return steered
 
     def __enter__(self):
+        self.applied = False
         self.handle = self.layer.register_forward_hook(self._hook)
         return self
 

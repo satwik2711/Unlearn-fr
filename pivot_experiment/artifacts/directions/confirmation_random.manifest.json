@@ -1,0 +1,50 @@
+{
+  "confirmation_freeze_hash": "611e88b4a51ffdec5cca5154e6a71b056b8531fff72ecd85073cf0e726955886",
+  "confirmation_read": false,
+  "direction_freeze_hash": "9b781bb673570c10e0a29ea71bd2316106a8518a36538e91374c7ca7054f42c9",
+  "directions": [
+    {
+      "condition": "random_1042",
+      "distribution": "isotropic_standard_normal_rescaled",
+      "l2_norm": 6.7960896492004395,
+      "seed": 1042,
+      "tensor_sha256": "54d7b198b0ad9ba1c557ade3ce8712f5365d7b2985f7ea9c74a7d2ee2de3f66f"
+    },
+    {
+      "condition": "random_2042",
+      "distribution": "isotropic_standard_normal_rescaled",
+      "l2_norm": 6.7960896492004395,
+      "seed": 2042,
+      "tensor_sha256": "3e657db593fa1e4080ad576bae07463ebfd9edcbd3b8a2e47423cd47320fbcb2"
+    },
+    {
+      "condition": "random_3042",
+      "distribution": "isotropic_standard_normal_rescaled",
+      "l2_norm": 6.796089172363281,
+      "seed": 3042,
+      "tensor_sha256": "35f2149aa6ddd7b2cc15e5c9891500b5f6dd5f3c19b41b7708a611e5ae0ff612"
+    },
+    {
+      "condition": "random_4042",
+      "distribution": "isotropic_standard_normal_rescaled",
+      "l2_norm": 6.796088218688965,
+      "seed": 4042,
+      "tensor_sha256": "640a7441b9bde058798f51a1f084df89e7d446efb805cc44a508904344228c2a"
+    },
+    {
+      "condition": "random_5042",
+      "distribution": "isotropic_standard_normal_rescaled",
+      "l2_norm": 6.796087741851807,
+      "seed": 5042,
+      "tensor_sha256": "d0987b82a0e8da406bab99fe07c08a03be60d331796871175978100efcf56071"
+    }
+  ],
+  "file_sha256": "f3f4688034454540d35a57c520d4cd6baeeff71e55c82ae0ce716f9e884f8a13",
+  "hidden_size": 2048,
+  "learned_direction_norm": 6.796089172363281,
+  "random_freeze_hash": "615d117c5662bdcf3af15f77e2772471d57f27e9ced5d0fefd4cf16953777019",
+  "schema_version": 1,
+  "source": "five_seeded_isotropic_controls",
+  "status": "FROZEN",
+  "tensor_file": "artifacts/directions/confirmation_random.safetensors"
+}

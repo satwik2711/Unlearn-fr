@@ -1,0 +1,39 @@
+{
+  "author_aggregation": "mean_within_author_then_mean_across_authors",
+  "clustered_bootstrap_resamples": 5000,
+  "confirmation_freeze_hash": "611e88b4a51ffdec5cca5154e6a71b056b8531fff72ecd85073cf0e726955886",
+  "confirmation_read_before_execution_freeze": false,
+  "direction_freeze_hash": "9b781bb673570c10e0a29ea71bd2316106a8518a36538e91374c7ca7054f42c9",
+  "execution_freeze_hash": "b440d85f69eac9d9073dad1f1c0a11d966702ea81242073fb7bcdca69167ddfd",
+  "final_states_hash": "0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c",
+  "generation_conditions": [
+    "full",
+    "baseline",
+    "learned"
+  ],
+  "generation_is_diagnostic": true,
+  "generation_settings": {
+    "do_sample": false,
+    "generation_batch_size": 2,
+    "max_new_tokens": 64,
+    "num_beams": 1,
+    "use_cache": true
+  },
+  "layer": 14,
+  "likelihood_conditions": [
+    "baseline",
+    "learned",
+    "random_1042",
+    "random_2042",
+    "random_3042",
+    "random_4042",
+    "random_5042"
+  ],
+  "likelihood_metric": "mean_target_logprob_nats_per_token",
+  "random_freeze_hash": "615d117c5662bdcf3af15f77e2772471d57f27e9ced5d0fefd4cf16953777019",
+  "random_rank_direction": "descending_fractional_recovery",
+  "role": "pre_confirmation_engineering_supplement",
+  "schema_version": 1,
+  "selected_alpha": 1.0,
+  "status": "FROZEN"
+}

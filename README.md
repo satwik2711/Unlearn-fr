@@ -159,5 +159,65 @@ model:
 .venv/bin/python pivot_experiment/scripts/check_stages.py --through D
 ```
 
-Commands for later chunks will be added only after their implementations are
-validated.
+## Chunk 5 — sealed held-out confirmation
+
+The pre-confirmation execution protocol and five norm-matched random
+directions are frozen. Revalidate them with:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/prepare_confirmation.py
+```
+
+Run FULL first to establish the shared held-out denominator, then run each
+receiver. Each command is independently resumable:
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_confirmation.py --state full \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/confirmation_full.log
+```
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_confirmation.py --state idk \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/confirmation_idk.log
+```
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_confirmation.py --state gd02 \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/confirmation_gd02.log
+```
+
+```bash
+caffeinate -dimsu env PYTHONUNBUFFERED=1 \
+  .venv/bin/python pivot_experiment/scripts/run_confirmation.py --state retain \
+  2>&1 | tee -a pivot_experiment/artifacts/logs/confirmation_retain.log
+```
+
+FULL writes 100 likelihood scores and 100 greedy generations. Each receiver
+writes 700 likelihood scores (baseline, learned, five random controls) and 200
+generations (baseline and learned). To separate the workloads, pass
+`--phase scores` or `--phase generations`; a later `--phase all` safely resumes
+whatever remains.
+
+After all four states finish:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/finalize_confirmation.py
+.venv/bin/python pivot_experiment/scripts/check_stages.py --through E
+```
+
+## Chunk 6 — model-free final analysis
+
+Generate all integrity-bound JSONL tables, PNG figures, the summary, and the
+claim-bounded Markdown report without loading any model:
+
+```bash
+.venv/bin/python pivot_experiment/scripts/generate_final_report.py
+.venv/bin/python pivot_experiment/scripts/check_stages.py --through F
+```
+
+Outputs are written under `pivot_experiment/artifacts/analysis/`. The report
+distinguishes successful IDK calibration from the contrary GD02 transfer result
+and preserves the component GD02 and RETAIN effects alongside the differential.

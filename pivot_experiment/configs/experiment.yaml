@@ -44,3 +44,10 @@ steering:
   alphas: [0.5, 1.0, 2.0]
   beta: 1.0
   random_seeds: [1042, 2042, 3042, 4042, 5042]
+
+confirmation:
+  generation_batch_size: 2
+  max_new_tokens: 64
+  do_sample: false
+  num_beams: 1
+  use_cache: true
