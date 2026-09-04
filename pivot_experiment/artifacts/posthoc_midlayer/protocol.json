@@ -1,0 +1,58 @@
+{
+  "alpha": 1.0,
+  "analysis_role": "posthoc_midnetwork_robustness_check",
+  "confirmation_previously_opened": true,
+  "direction": "mean_FULL_minus_IDK_on_discovery",
+  "direction_norm": 2.568613052368164,
+  "example_count": 100,
+  "existing_exact_patch_layer10": {
+    "layer": 10,
+    "mean_fractional_recovery": 0.4119345905633082,
+    "mean_raw_recovery": 0.04956435784697533,
+    "positive_authors": 5,
+    "schema_version": 1,
+    "selected_layer": false,
+    "state": "idk"
+  },
+  "final_states_hash": "0e8ba8a0f4816507da0f83cf98092d0419bd4b759bf53bb95574ae5f1e3e2d6c",
+  "fresh_confirmation_claim_allowed": false,
+  "generation": false,
+  "layer": 10,
+  "learned_tensor_sha256": "83538af6d9bf5cb3f1cb82be0fde057669dd4ec4fc44270a60f238c348399a83",
+  "no_layer_or_alpha_search": true,
+  "protocol_hash": "9af7228fdcd5ceda76a0e48dfb4fd2b4788aea9126bf2403b5dfde92dabb909e",
+  "random_controls": [
+    {
+      "condition": "random_1042",
+      "seed": 1042,
+      "tensor_sha256": "0b6932ef813ba50c1306bc94ee40341edff3fa92b3056002ad8cf1e53d9e3920"
+    },
+    {
+      "condition": "random_2042",
+      "seed": 2042,
+      "tensor_sha256": "98f7267a24e80544c76f4deeb32f3092f34de106f6d541dfe5ccb16f20689b30"
+    },
+    {
+      "condition": "random_3042",
+      "seed": 3042,
+      "tensor_sha256": "75ed3de039b9e6e628469e982f4b0bea1e601a9d142b1ac2d40e2d70c0621d84"
+    },
+    {
+      "condition": "random_4042",
+      "seed": 4042,
+      "tensor_sha256": "95f3fca71ec237de64737617760abd98b27ea006e3a93fa05713e9465dc3de1b"
+    },
+    {
+      "condition": "random_5042",
+      "seed": 5042,
+      "tensor_sha256": "b24c59f324a9cc5b52d2565837dc6ab77a75e55d63c3b82237fafdf1f6880ca4"
+    }
+  ],
+  "schema_version": 1,
+  "selection_rule": "fixed_center_of_proposed_layers_9_to_11",
+  "source_examples_hash": "d7b22331a76e6ea58f023e64c4331978bd7bd45fb15693d39c00df025e7b74bc",
+  "status": "FROZEN_POSTHOC",
+  "tensor_file": "artifacts/posthoc_midlayer/directions/full_minus_idk_layer10.safetensors",
+  "tensor_file_sha256": "958c298488510161212ffffce231f11b8f0b2cbcab4a25048609062c1b00adfa",
+  "token_position": "Q_END"
+}

@@ -2,7 +2,16 @@
 .safetensors
 __pycache__/
 *.py[cod]
+.DS_Store
 /pivot_experiment/*.egg-info/
 /pivot_experiment/src/*.egg-info/
 /pivot_experiment/archive/idk_refusal_failed/data/
 /pivot_experiment/archive/idk_suppression_failed/data/
+/context/plan.md
+/pivot_experiment/artifacts/activations/
+/pivot_experiment/artifacts/checkpoints/
+/pivot_experiment/artifacts/confirmation/
+/pivot_experiment/artifacts/data/
+/pivot_experiment/artifacts/interventions/
+/pivot_experiment/artifacts/logs/
+/pivot_experiment/artifacts/scores/

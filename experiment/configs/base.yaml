@@ -1,5 +1,0 @@
-seed: 42
-model: models/Qwen3.5-2B
-dtype: bfloat16
-max_length: 256
-dataset_revision: 324592d84ae4f482ac7249b9285c2ecdb53e3a68

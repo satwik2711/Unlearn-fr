@@ -1,0 +1,499 @@
+{
+  "all_condition_metrics": {
+    "gd02": {
+      "learned": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.02998815847156626,
+          "tofu-a192": -0.14376614937703636,
+          "tofu-a193": -0.10360279025640878,
+          "tofu-a195": -0.037555600886217316,
+          "tofu-a198": -0.02367269714678952
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.11297787937181683,
+          -0.028975462424585773
+        ],
+        "mean_fractional_recovery": -0.06771707922760366,
+        "mean_raw_recovery": -0.0476223050407134,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_1042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.006990628233179581,
+          "tofu-a192": -0.00031515708819918807,
+          "tofu-a193": -0.015924274072041587,
+          "tofu-a195": -0.0029479363906963194,
+          "tofu-a198": -0.004271011221971071
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.01154227736800013,
+          -0.002159439635952417
+        ],
+        "mean_fractional_recovery": -0.006089801401217549,
+        "mean_raw_recovery": -0.0036408976651728145,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_2042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.021954611270515935,
+          "tofu-a192": -0.005158831493333397,
+          "tofu-a193": -0.02634972983230327,
+          "tofu-a195": -0.013267470520554913,
+          "tofu-a198": -0.0017021054568945174
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.021975230545238665,
+          -0.005752606619618801
+        ],
+        "mean_fractional_recovery": -0.013686549714720405,
+        "mean_raw_recovery": -0.009230335801839828,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_3042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.0032892736653320847,
+          "tofu-a192": -0.014238376539059454,
+          "tofu-a193": -0.01849153071949072,
+          "tofu-a195": -0.024977221283321475,
+          "tofu-a198": -0.022396332586156156
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.022647727691689195,
+          -0.009370176486995539
+        ],
+        "mean_fractional_recovery": -0.016678546958671978,
+        "mean_raw_recovery": -0.013603179967030882,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_4042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.032393752864201174,
+          "tofu-a192": -0.0032852689106930622,
+          "tofu-a193": -0.021636959636773537,
+          "tofu-a195": -0.005843274857539573,
+          "tofu-a198": 0.022639815385046988
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.02442069742801402,
+          0.00808784233216557
+        ],
+        "mean_fractional_recovery": -0.008103888176832072,
+        "mean_raw_recovery": -0.0042096564592793585,
+        "positive_authors": 1,
+        "unstable_authors": {}
+      },
+      "random_5042": {
+        "author_fractional_recovery": {
+          "tofu-a186": 0.003946349041387848,
+          "tofu-a192": 0.02908706055409286,
+          "tofu-a193": 0.019959095942127993,
+          "tofu-a195": 0.013190948624246834,
+          "tofu-a198": 0.016762044746222022
+        },
+        "fractional_author_clustered_ci_95": [
+          0.009072627323321519,
+          0.02408224524573068
+        ],
+        "mean_fractional_recovery": 0.01658909978161551,
+        "mean_raw_recovery": 0.012590799534227698,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      }
+    },
+    "idk": {
+      "learned": {
+        "author_fractional_recovery": {
+          "tofu-a186": 0.326923980370147,
+          "tofu-a192": 0.24182919437664901,
+          "tofu-a193": 0.33630024228417765,
+          "tofu-a195": 0.26016629854421197,
+          "tofu-a198": 0.34298668185093056
+        },
+        "fractional_author_clustered_ci_95": [
+          0.2643908247916673,
+          0.3357622778147221
+        ],
+        "mean_fractional_recovery": 0.30164127948522323,
+        "mean_raw_recovery": 0.04152625046670437,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      },
+      "random_1042": {
+        "author_fractional_recovery": {
+          "tofu-a186": 0.05358941124014435,
+          "tofu-a192": 0.059425303344658,
+          "tofu-a193": 0.03127842353089445,
+          "tofu-a195": 0.012268704726984284,
+          "tofu-a198": 0.07309955469410931
+        },
+        "fractional_author_clustered_ci_95": [
+          0.025501968211301063,
+          0.0637278254635358
+        ],
+        "mean_fractional_recovery": 0.04593227950735808,
+        "mean_raw_recovery": 0.006438591480255128,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      },
+      "random_2042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.013575564318589146,
+          "tofu-a192": -0.01390812002046336,
+          "tofu-a193": -0.015648751658646428,
+          "tofu-a195": -0.018639051072384182,
+          "tofu-a198": 0.03273516119892987
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.016746678651615853,
+          0.013729722383535963
+        ],
+        "mean_fractional_recovery": -0.00580726517423065,
+        "mean_raw_recovery": -0.0011118128150701522,
+        "positive_authors": 1,
+        "unstable_authors": {}
+      },
+      "random_3042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.020514357762030876,
+          "tofu-a192": -0.0014598711260998688,
+          "tofu-a193": -0.020455724635719614,
+          "tofu-a195": -0.03636073562449396,
+          "tofu-a198": -0.0031987263609442084
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.02685290890701611,
+          -0.005618539500254939
+        ],
+        "mean_fractional_recovery": -0.016397883101857705,
+        "mean_raw_recovery": -0.002198649421334267,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_4042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.05741086633215843,
+          "tofu-a192": -0.04003764567313312,
+          "tofu-a193": -0.06716173180679275,
+          "tofu-a195": -0.03416319170244685,
+          "tofu-a198": -0.021305428293467002
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.058611850690996704,
+          -0.030194977132992167
+        ],
+        "mean_fractional_recovery": -0.04401577276159964,
+        "mean_raw_recovery": -0.006287654265761375,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_5042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.022981363738336542,
+          "tofu-a192": -0.05694537245222754,
+          "tofu-a193": -0.06361647825583358,
+          "tofu-a195": -0.004004368433249886,
+          "tofu-a198": -0.0739056083729118
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.06639790914194366,
+          -0.019722189458783956
+        ],
+        "mean_fractional_recovery": -0.04429063825051187,
+        "mean_raw_recovery": -0.006282270923256875,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      }
+    },
+    "retain": {
+      "learned": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.021237762316243938,
+          "tofu-a192": -0.027800129067066776,
+          "tofu-a193": -0.014709980820055276,
+          "tofu-a195": -0.014999206598506258,
+          "tofu-a198": -0.006998954563050191
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.02363989416626346,
+          -0.011446766520780154
+        ],
+        "mean_fractional_recovery": -0.017149206672984488,
+        "mean_raw_recovery": -0.03885221078991889,
+        "positive_authors": 0,
+        "unstable_authors": {}
+      },
+      "random_1042": {
+        "author_fractional_recovery": {
+          "tofu-a186": 0.00467654152258202,
+          "tofu-a192": 0.002249939746725622,
+          "tofu-a193": -0.0005903051179363357,
+          "tofu-a195": -0.0017774206846837743,
+          "tofu-a198": -0.0005467661457437727
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.0010564435501967985,
+          0.002900428725957582
+        ],
+        "mean_fractional_recovery": 0.000802397864188752,
+        "mean_raw_recovery": 0.0009973234310746192,
+        "positive_authors": 2,
+        "unstable_authors": {}
+      },
+      "random_2042": {
+        "author_fractional_recovery": {
+          "tofu-a186": 0.0018540663573517135,
+          "tofu-a192": 0.0015178322391122682,
+          "tofu-a193": 0.0002922313405631876,
+          "tofu-a195": 0.0008615966043493667,
+          "tofu-a198": 0.001312125447468191
+        },
+        "fractional_author_clustered_ci_95": [
+          0.0006512245730302395,
+          0.0016111845280792308
+        ],
+        "mean_fractional_recovery": 0.0011675703977689453,
+        "mean_raw_recovery": 0.0024722982197999954,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      },
+      "random_3042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.0032442356608160913,
+          "tofu-a192": -0.0020121323085309545,
+          "tofu-a193": 0.0015715534518424667,
+          "tofu-a195": -0.005704739595152944,
+          "tofu-a198": 0.0002781127274976764
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.004227696680504148,
+          0.0003374400100298664
+        ],
+        "mean_fractional_recovery": -0.0018222882770319692,
+        "mean_raw_recovery": -0.004713856726884841,
+        "positive_authors": 2,
+        "unstable_authors": {}
+      },
+      "random_4042": {
+        "author_fractional_recovery": {
+          "tofu-a186": -0.006319800747882788,
+          "tofu-a192": 0.0019974357008928126,
+          "tofu-a193": -0.000962936273009272,
+          "tofu-a195": -0.0038643195663474964,
+          "tofu-a198": 0.001153582109652033
+        },
+        "fractional_author_clustered_ci_95": [
+          -0.004334027940068766,
+          0.0010678198696160838
+        ],
+        "mean_fractional_recovery": -0.0015992077553389425,
+        "mean_raw_recovery": -0.0037318504601717,
+        "positive_authors": 2,
+        "unstable_authors": {}
+      },
+      "random_5042": {
+        "author_fractional_recovery": {
+          "tofu-a186": 0.012264288322524455,
+          "tofu-a192": 0.00365232105216088,
+          "tofu-a193": 0.0021770231121360176,
+          "tofu-a195": 0.002344574408495359,
+          "tofu-a198": 0.004238500453394783
+        },
+        "fractional_author_clustered_ci_95": [
+          0.0025391032186847266,
+          0.008641677706620833
+        ],
+        "mean_fractional_recovery": 0.004935341469742298,
+        "mean_raw_recovery": 0.009890148527920247,
+        "positive_authors": 5,
+        "unstable_authors": {}
+      }
+    }
+  },
+  "all_transfer_conditions": {
+    "learned": {
+      "author_clustered_ci_95": [
+        -0.09069292259000032,
+        -0.014680934353166872
+      ],
+      "author_differential": {
+        "tofu-a186": -0.008750396155322322,
+        "tofu-a192": -0.11596602030996958,
+        "tofu-a193": -0.08889280943635351,
+        "tofu-a195": -0.022556394287711057,
+        "tofu-a198": -0.01667374258373933
+      },
+      "mean_differential_fractional_recovery": -0.05056787255461916,
+      "positive_authors": 0
+    },
+    "random_1042": {
+      "author_clustered_ci_95": [
+        -0.012046834690600434,
+        -0.0022390940316204012
+      ],
+      "author_differential": {
+        "tofu-a186": -0.0116671697557616,
+        "tofu-a192": -0.00256509683492481,
+        "tofu-a193": -0.015333968954105251,
+        "tofu-a195": -0.001170515706012545,
+        "tofu-a198": -0.003724245076227298
+      },
+      "mean_differential_fractional_recovery": -0.0068921992654063,
+      "positive_authors": 0
+    },
+    "random_2042": {
+      "author_clustered_ci_95": [
+        -0.0230060689452745,
+        -0.007173120249063697
+      ],
+      "author_differential": {
+        "tofu-a186": -0.023808677627867647,
+        "tofu-a192": -0.006676663732445665,
+        "tofu-a193": -0.02664196117286646,
+        "tofu-a195": -0.01412906712490428,
+        "tofu-a198": -0.0030142309043627085
+      },
+      "mean_differential_fractional_recovery": -0.01485412011248935,
+      "positive_authors": 0
+    },
+    "random_3042": {
+      "author_clustered_ci_95": [
+        -0.020949508131628512,
+        -0.007007160711546062
+      ],
+      "author_differential": {
+        "tofu-a186": -4.503800451599333e-05,
+        "tofu-a192": -0.0122262442305285,
+        "tofu-a193": -0.020063084171333186,
+        "tofu-a195": -0.01927248168816853,
+        "tofu-a198": -0.022674445313653833
+      },
+      "mean_differential_fractional_recovery": -0.014856258681640009,
+      "positive_authors": 0
+    },
+    "random_4042": {
+      "author_clustered_ci_95": [
+        -0.0201749670007823,
+        0.007700394370166945
+      ],
+      "author_differential": {
+        "tofu-a186": -0.026073952116318386,
+        "tofu-a192": -0.005282704611585875,
+        "tofu-a193": -0.020674023363764265,
+        "tofu-a195": -0.0019789552911920767,
+        "tofu-a198": 0.021486233275394954
+      },
+      "mean_differential_fractional_recovery": -0.006504680421493131,
+      "positive_authors": 1
+    },
+    "random_5042": {
+      "author_clustered_ci_95": [
+        0.0007349258404667255,
+        0.02098653311030788
+      ],
+      "author_differential": {
+        "tofu-a186": -0.008317939281136607,
+        "tofu-a192": 0.02543473950193198,
+        "tofu-a193": 0.017782072829991974,
+        "tofu-a195": 0.010846374215751475,
+        "tofu-a198": 0.01252354429282724
+      },
+      "mean_differential_fractional_recovery": 0.011653758311873211,
+      "positive_authors": 4
+    }
+  },
+  "alpha": 1.0,
+  "analysis_role": "posthoc_midnetwork_robustness_check",
+  "fresh_confirmation_claim_allowed": false,
+  "gd02_learned": {
+    "author_fractional_recovery": {
+      "tofu-a186": -0.02998815847156626,
+      "tofu-a192": -0.14376614937703636,
+      "tofu-a193": -0.10360279025640878,
+      "tofu-a195": -0.037555600886217316,
+      "tofu-a198": -0.02367269714678952
+    },
+    "fractional_author_clustered_ci_95": [
+      -0.11297787937181683,
+      -0.028975462424585773
+    ],
+    "mean_fractional_recovery": -0.06771707922760366,
+    "mean_raw_recovery": -0.0476223050407134,
+    "positive_authors": 0,
+    "unstable_authors": {}
+  },
+  "idk_learned": {
+    "author_fractional_recovery": {
+      "tofu-a186": 0.326923980370147,
+      "tofu-a192": 0.24182919437664901,
+      "tofu-a193": 0.33630024228417765,
+      "tofu-a195": 0.26016629854421197,
+      "tofu-a198": 0.34298668185093056
+    },
+    "fractional_author_clustered_ci_95": [
+      0.2643908247916673,
+      0.3357622778147221
+    ],
+    "mean_fractional_recovery": 0.30164127948522323,
+    "mean_raw_recovery": 0.04152625046670437,
+    "positive_authors": 5,
+    "unstable_authors": {}
+  },
+  "idk_learned_rank_among_six": 1,
+  "interpretation_rule": "A negative or null learned GD02-minus-RETAIN differential strengthens only the assay-specific non-transfer robustness claim; it cannot establish erasure.",
+  "layer": 10,
+  "learned_transfer": {
+    "author_clustered_ci_95": [
+      -0.09069292259000032,
+      -0.014680934353166872
+    ],
+    "author_differential": {
+      "tofu-a186": -0.008750396155322322,
+      "tofu-a192": -0.11596602030996958,
+      "tofu-a193": -0.08889280943635351,
+      "tofu-a195": -0.022556394287711057,
+      "tofu-a198": -0.01667374258373933
+    },
+    "mean_differential_fractional_recovery": -0.05056787255461916,
+    "positive_authors": 0
+  },
+  "protocol_hash": "9af7228fdcd5ceda76a0e48dfb4fd2b4788aea9126bf2403b5dfde92dabb909e",
+  "result_hash": "67fe11e36c84821d5e15ce8503726d70e14f3014f2fc1f6ed9bcc36d7321cc60",
+  "retain_learned": {
+    "author_fractional_recovery": {
+      "tofu-a186": -0.021237762316243938,
+      "tofu-a192": -0.027800129067066776,
+      "tofu-a193": -0.014709980820055276,
+      "tofu-a195": -0.014999206598506258,
+      "tofu-a198": -0.006998954563050191
+    },
+    "fractional_author_clustered_ci_95": [
+      -0.02363989416626346,
+      -0.011446766520780154
+    ],
+    "mean_fractional_recovery": -0.017149206672984488,
+    "mean_raw_recovery": -0.03885221078991889,
+    "positive_authors": 0,
+    "unstable_authors": {}
+  },
+  "schema_version": 1,
+  "source_hashes": {
+    "gd02": {
+      "original_baselines_sha256": "a91060b2b65e78bfad76883905a08da6d7b1b06aa407a1beb686791b458cca3e",
+      "posthoc_scores_sha256": "fffcd5397aa5dbb30f60db428ed3d81913e4ee130b77cb6c4299bc75a63f3a3b"
+    },
+    "idk": {
+      "original_baselines_sha256": "15715c31047c981a41da4b73c5afff6e504017b969994b4afdb28e176708f4ab",
+      "posthoc_scores_sha256": "5e401a9d08199316f2b95fea048d003b94ca2b5bbe217d1b4acacbb3cdb2fda3"
+    },
+    "retain": {
+      "original_baselines_sha256": "64652219094028c431abfea4ad9291c0d3dbb9d82f2c55338ffa926708b7f363",
+      "posthoc_scores_sha256": "cf8424af6a8e2438947775d7835c1cd3fb6932b25032458993e6fe837e0ca211"
+    }
+  },
+  "status": "COMPLETE_POSTHOC",
+  "transfer_learned_rank_among_six": 6
+}

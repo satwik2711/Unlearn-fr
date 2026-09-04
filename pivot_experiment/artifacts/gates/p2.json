@@ -1,6 +1,0 @@
-{
-  "gate": "P2",
-  "reason": "Missing score artifact or manifest for /Users/satwikpandey/Dev/unlearn-fr/pivot_experiment/artifacts/interventions/p2_gd_matched.jsonl",
-  "schema_version": 1,
-  "status": "BLOCKED"
-}
