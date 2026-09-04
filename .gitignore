@@ -15,3 +15,5 @@ __pycache__/
 /pivot_experiment/artifacts/interventions/
 /pivot_experiment/artifacts/logs/
 /pivot_experiment/artifacts/scores/
+
+/context
